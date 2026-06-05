@@ -1,59 +1,62 @@
-import js from "@eslint/js";
-import { defineConfig } from "eslint/config";
-import tseslint from "typescript-eslint";
-import importPlugin from "eslint-plugin-import";
-import prettier from "eslint-config-prettier";
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  prettier,
-
+  globalIgnores(['dist']),
   {
-    files: ["**/*.{js,ts,jsx,tsx}"],
-
-    plugins: {
-      import: importPlugin,
-    },
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
 
     rules: {
-      "no-console": ["warn", { allow: ["warn", "error"] }],
-      "no-debugger": "warn",
+      "quotes": ["error", "single"],
+      "object-curly-spacing": ["error", "always"],
+      "arrow-parens": ["error", "as-needed"],
 
-      "semi": ["error", "always"],
-      "quotes": ["error", "double"],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error",
+
+      "no-undef": "error",
+      "no-console": "error",
+      "no-debugger": "error",
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "no-new-func": "error",
+      "no-constant-condition": "error",
+      "no-unreachable": "error",
+      "no-implicit-globals": "error",
+      "no-self-assign": "error",
+      "no-sparse-arrays": "error",
       "no-unexpected-multiline": "error",
 
-      "import/order": [
-        "warn",
-        {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-          ],
-          "newlines-between": "always",
-        },
-      ],
+      "default-case": "error",
 
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-        },
-      ],
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/ban-ts-comment": "error",
+      "@typescript-eslint/no-inferrable-types": "error",
 
-      // "@typescript-eslint/consistent-type-imports": "warn",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    },
+
+    languageOptions: {
+      globals: globals.browser,
     },
 
     ignores: [
-      "dist/**",
+      ".next/**",
+      "out/**",
       "build/**",
       "node_modules/**",
+      "next-env.d.ts",
     ],
   },
-]);
+])
