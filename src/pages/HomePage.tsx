@@ -1,3 +1,28 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment } from '../store/counter/counterSlice';
+import type { RootState } from '../store/store.ts';
+
 export default function HomePage() {
-    return <h1>Home Page</h1>;
+    const count = useSelector((state: RootState) => state.counter.value);
+    const dispatch = useDispatch();
+
+    return (
+        <div>
+            <div>
+                <button
+                    aria-label="Increment value"
+                    onClick={() => dispatch(increment())}
+                >
+                    Increment
+                </button>
+                <span>{count}</span>
+                <button
+                    aria-label="Decrement value"
+                    onClick={() => dispatch(decrement())}
+                >
+                    Decrement
+                </button>
+            </div>
+        </div>
+    );
 }

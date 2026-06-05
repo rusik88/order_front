@@ -20,6 +20,7 @@ export default defineConfig([
       "quotes": ["error", "single"],
       "object-curly-spacing": ["error", "always"],
       "arrow-parens": ["error", "as-needed"],
+      "semi": ["error", "always"],
 
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "error",
