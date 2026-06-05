@@ -4,6 +4,10 @@ import AuthLayout from '../layouts/AuthLayout';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import MainLayout from '../layouts/MainLayout';
+import DashboardPage from '../pages/manager/DashboardPage.tsx';
+import OrderListPage from '../pages/manager/orders/OrderListPage.tsx';
+import OrderCreatePage from '../pages/manager/orders/OrderCreatePage.tsx';
 
 export const router = createBrowserRouter([
     {
@@ -22,5 +26,24 @@ export const router = createBrowserRouter([
         ],
 
         errorElement: <NotFoundPage />,
+    },
+    {
+        path: '/manager',
+        element: <MainLayout />,
+
+        children: [
+            {
+                index: true,
+                element: <DashboardPage />,
+            },
+            {
+                path: 'order-list',
+                element: <OrderListPage />,
+            },
+            {
+                path: 'order-create',
+                element: <OrderCreatePage />,
+            }
+        ],
     }
 ]);
