@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useMeQuery } from '../services/AuthApi';
 import { removeToken } from '../store/slices/AuthSlice';
 import { config_app } from '../../config';
+import LoaderComponent from '../components/common/LoaderComponent';
 
 export default function MainLayout() {
     const auth_token = useAppSelector(state => state.auth.auth_token);
@@ -17,7 +18,7 @@ export default function MainLayout() {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <LoaderComponent />;
     }
 
     if (isError) {
