@@ -12,6 +12,8 @@ ReactDOM.createRoot(
     document.getElementById('root')!
 ).render(
     <Provider store={store}>
-        <RouterProvider router={router} />
+        <div className="min-h-screen bg-gradient-to-b from-slate-950 via-blue-950 to-blue-900 text-white flex flex-col">
+            <RouterProvider router={router} />
+        </div>
     </Provider>
 );

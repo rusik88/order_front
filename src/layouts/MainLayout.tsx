@@ -7,6 +7,7 @@ import HeaderComponent from '../components/manager/header/HeaderComponent';
 import FooterComponent from '../components/manager/footer/FooterComponent';
 import SidebarComponent from '../components/manager/sidebar/SidebarComponent';
 import { PUBLIC_ROUTES } from '../router/routes.ts';
+import AlertComponent from '../components/common/AlertComponent';
 
 export default function MainLayout() {
     const auth_token = useAppSelector(state => state.auth.auth_token);
@@ -31,7 +32,7 @@ export default function MainLayout() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-slate-950 via-blue-950 to-blue-900 text-white flex flex-col">
+        <>
             <HeaderComponent />
             <div className="flex flex-1">
                 <SidebarComponent />
@@ -42,6 +43,7 @@ export default function MainLayout() {
                 </main>
             </div>
             <FooterComponent />
-        </div>
+            <AlertComponent />
+        </>
     );
 }

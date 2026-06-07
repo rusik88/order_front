@@ -1,19 +1,10 @@
 import clsx from 'clsx';
 import * as React from 'react';
-import  { type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-
-interface ButtonComponentProps {
-    children: ReactNode;
-    classNames?: string;
-    isDisabled?: boolean;
-    link?: string;
-    type?: 'default' | 'inverse';
-    onClick?:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
+import type { IButtonProps } from '../../interfaces/ui/ButtonInterface.ts';
 
 const ButtonComponent = (
-    { children, classNames, isDisabled, link, type, onClick } : ButtonComponentProps) => {
+    { children, classNames, isDisabled, link, type, onClick } : IButtonProps) => {
 
     let baseClasses = clsx(
         'py-3 px-10 flex align-center justify-center rounded-xl bg-linear-to-r from-blue-500 to-blue-600 text-xl font-semibold text-white transition',
