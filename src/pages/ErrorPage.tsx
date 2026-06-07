@@ -1,3 +1,6 @@
+import ButtonComponent from '../components/ui/ButtonComponent';
+import { PUBLIC_ROUTES } from '../router/routes';
+
 const ErrorPage = () => {
     return (
         <div className="min-h-screen bg-linear-to-b from-slate-950 via-blue-950 to-blue-900 text-white flex items-center justify-center p-8">
@@ -5,6 +8,9 @@ const ErrorPage = () => {
                 <div className="text-[120px] font-bold leading-none text-white/10">500</div>
                 <h1 className="text-4xl font-bold mt-4">Page Error</h1>
                 <p className="text-slate-300 mt-4">The server encountered an error and could not complete your request.</p>
+                <div className="mt-4 flex justify-center">
+                    <ButtonComponent link={PUBLIC_ROUTES.LOGIN}>Home</ButtonComponent>
+                </div>
             </div>
         </div>
     );
