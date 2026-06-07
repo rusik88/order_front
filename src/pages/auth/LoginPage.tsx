@@ -68,6 +68,7 @@ const LoginPage = () => {
                                 type="email"
                                 placeholder="Enter your email"
                                 {...register('email')}
+                                autoComplete="off"
                                 className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
                             />
                         </div>
@@ -83,6 +84,7 @@ const LoginPage = () => {
                             <input
                                 type="password"
                                 placeholder="Enter your password"
+                                autoComplete="off"
                                 {...register('password')}
                                 className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
                             />

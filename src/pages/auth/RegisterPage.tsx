@@ -1,16 +1,23 @@
 import ButtonComponent from '../../components/ui/ButtonComponent.tsx';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { registerSchema, type RegisterFormDataType, type LoginFormDataType } from '../../schemas/AuthSchema';
+import { registerSchema, type RegisterFormDataType } from '../../schemas/AuthSchema';
+import type { IApiAppResponse, IApiErrorData, IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
+import { setToken } from '../../store/slices/AuthSlice';
+import { useRegistrationMutation } from '../../services/AuthApi';
 
 const RegisterPage = () => {
+    const dispatch = useDispatch();
+    const [errorForm, setErrorForm] = useState<string>('');
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting, isSubmitted, isValid }
+        formState: { errors, isSubmitted, isValid }
     } = useForm<RegisterFormDataType>({
         resolver: zodResolver(registerSchema),
         mode: 'onChange',
@@ -19,10 +26,32 @@ const RegisterPage = () => {
         },
     });
 
-    const onSubmit = async (data: LoginFormDataType) => {
-        console.log(data);
+    const [registration, { isLoading }] = useRegistrationMutation();
 
-
+    const onSubmit = async (data: RegisterFormDataType) => {
+        try {
+            const res: IApiAppResponse<IApiLoginData> = await registration(data).unwrap();
+            if(
+                (res.data !== undefined && res.data !== null) &&
+                (res.data.auth_token !== undefined && res.data.auth_token !== null)
+            ) {
+                dispatch(setToken(res.data));
+            } else {
+                throw {
+                    data: {
+                        message: 'Authentication failed. Please check your credentials and try again.'
+                    }
+                };
+            }
+        } catch(err) {
+            const err_request = err as IApiErrorData;
+            if(err_request.data !== undefined && err_request.data.message !== undefined) {
+                setErrorForm(err_request.data.message);
+                setTimeout(() => {
+                    setErrorForm('');
+                }, 2000);
+            }
+        }
     };
 
 
@@ -38,6 +67,7 @@ const RegisterPage = () => {
                         <input
                             type="text"
                             placeholder="Enter your name"
+                            autoComplete="off"
                             {...register('name')}
                             className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
                         />
@@ -54,6 +84,7 @@ const RegisterPage = () => {
                         <input
                             type="email"
                             placeholder="Enter your email"
+                            autoComplete="off"
                             {...register('email')}
                             className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
                         />
@@ -69,6 +100,7 @@ const RegisterPage = () => {
                     <div className="flex items-center rounded-xl border border-white/10 bg-white/5 px-4">
                         <input
                             type="password"
+                            autoComplete="off"
                             placeholder="Enter your password"
                             {...register('password')}
                             className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
@@ -85,6 +117,7 @@ const RegisterPage = () => {
                     <div className="flex items-center rounded-xl border border-white/10 bg-white/5 px-4">
                         <input
                             type="password"
+                            autoComplete="off"
                             placeholder="Enter your password confirmed"
                             {...register('password_confirmation')}
                             className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
@@ -102,8 +135,13 @@ const RegisterPage = () => {
                     className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
                 />
                 <div className="mt-8">
-                    <ButtonComponent classNames="w-full" isDisabled={ isSubmitting || (isSubmitted && !isValid) }>Register</ButtonComponent>
+                    <ButtonComponent isDisabled={ isLoading || (isSubmitted && !isValid) } classNames="w-full">Register</ButtonComponent>
                 </div>
+                {errorForm && (
+                    <p className="mt-1 text-sm text-red-400">
+                        {errorForm}
+                    </p>
+                )}
                 <div className="mt-8 mb-3 flex items-center">
                     <div className="h-px flex-1 bg-white/10" />
                     <span className="mx-4 text-slate-400">or</span>

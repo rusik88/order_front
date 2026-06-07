@@ -14,7 +14,7 @@ export const AuthApi = createApi({
             }),
         }),
 
-        register: builder.mutation({
+        registration: builder.mutation({
             query: data => ({
                 url: API_APP.REGISTER,
                 method: 'POST',
@@ -37,7 +37,7 @@ export const AuthApi = createApi({
 
 export const {
     useLoginMutation,
-    useRegisterMutation,
+    useRegistrationMutation,
     useLogoutMutation,
     useMeQuery,
 } = AuthApi;
