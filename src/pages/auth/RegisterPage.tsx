@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {registerSchema, type RegisterFormDataType, type LoginFormDataType} from '../../schemas/AuthSchema';
+import { registerSchema, type RegisterFormDataType, type LoginFormDataType } from '../../schemas/AuthSchema';
 
 const RegisterPage = () => {
 
@@ -13,7 +13,10 @@ const RegisterPage = () => {
         formState: { errors, isSubmitting, isSubmitted, isValid }
     } = useForm<RegisterFormDataType>({
         resolver: zodResolver(registerSchema),
-        mode: 'onChange'
+        mode: 'onChange',
+        defaultValues: {
+            device: 'web',
+        },
     });
 
     const onSubmit = async (data: LoginFormDataType) => {
@@ -93,8 +96,13 @@ const RegisterPage = () => {
                         </p>
                     }
                 </div>
+                <input
+                    type="hidden"
+                    {...register('device')}
+                    className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
+                />
                 <div className="mt-8">
-                    <ButtonComponent isDisabled={ isSubmitting || (isSubmitted && !isValid) }>Register</ButtonComponent>
+                    <ButtonComponent classNames="w-full" isDisabled={ isSubmitting || (isSubmitted && !isValid) }>Register</ButtonComponent>
                 </div>
                 <div className="mt-8 mb-3 flex items-center">
                     <div className="h-px flex-1 bg-white/10" />

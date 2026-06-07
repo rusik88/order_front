@@ -1,27 +1,59 @@
 import ButtonComponent from '../../components/ui/ButtonComponent.tsx';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormDataType } from '../../schemas/AuthSchema';
+import { useLoginMutation } from '../../services/AuthApi';
+import type { IApiAppResponse, IApiErrorData, IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
+import { setToken } from '../../store/slices/AuthSlice';
+import { useDispatch } from 'react-redux';
+
 
 const LoginPage = () => {
+    const [errorForm, setErrorForm] = useState<string>('');
+    const dispatch = useDispatch();
+
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting, isSubmitted, isValid }
+        formState: { errors, isSubmitted, isValid }
     } = useForm<LoginFormDataType>({
         resolver: zodResolver(loginSchema),
-        mode: 'onChange'
+        mode: 'onChange',
+        defaultValues: {
+            device: 'web',
+        },
     });
 
+    const [login, { isLoading }] = useLoginMutation();
+
     const onSubmit = async (data: LoginFormDataType) => {
-        console.log(data);
-
-
+        try {
+            const res: IApiAppResponse<IApiLoginData> = await login(data).unwrap();
+            if(
+                (res.data !== undefined && res.data !== null) &&
+                (res.data.auth_token !== undefined && res.data.auth_token !== null)
+            ) {
+                dispatch(setToken(res.data));
+            } else {
+               throw {
+                    data: {
+                        message: 'Authentication failed. Please check your credentials and try again.'
+                    }
+               };
+            }
+        } catch(err) {
+            const err_request = err as IApiErrorData;
+            if(err_request.data !== undefined && err_request.data.message !== undefined) {
+                setErrorForm(err_request.data.message);
+                setTimeout(() => {
+                    setErrorForm('');
+                }, 2000);
+            }
+        }
     };
-
-    console.log("Test", isSubmitted);
 
     return (
         <>
@@ -61,9 +93,19 @@ const LoginPage = () => {
                             </p>
                         )}
                     </div>
+                    <input
+                        type="hidden"
+                        {...register('device')}
+                        className="h-13 w-full bg-transparent text-lg text-white placeholder:text-slate-500 focus:outline-none"
+                    />
                     <div className="mt-8">
-                        <ButtonComponent isDisabled={ isSubmitting || (isSubmitted && !isValid) }>Login</ButtonComponent>
+                        <ButtonComponent isDisabled={ isLoading || (isSubmitted && !isValid) } classNames="w-full">Login</ButtonComponent>
                     </div>
+                    {errorForm && (
+                        <p className="mt-1 text-sm text-red-400">
+                            {errorForm}
+                        </p>
+                    )}
                     <div className="mt-8 mb-3 flex items-center">
                         <div className="h-px flex-1 bg-white/10" />
                         <span className="mx-4 text-slate-400">or</span>

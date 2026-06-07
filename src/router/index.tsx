@@ -8,6 +8,10 @@ import MainLayout from '../layouts/MainLayout';
 import DashboardPage from '../pages/manager/DashboardPage.tsx';
 import OrderListPage from '../pages/manager/orders/OrderListPage.tsx';
 import OrderCreatePage from '../pages/manager/orders/OrderCreatePage.tsx';
+import { config_app } from '../../config';
+import { PUBLIC_ROUTES, PRIVATE_ROUTES, ERROR_ROUTES } from './routes';
+import ForbiddenPage from '../pages/ForbiddenPage';
+import ErrorPage from '../pages/ErrorPage';
 
 export const router = createBrowserRouter([
     {
@@ -20,7 +24,7 @@ export const router = createBrowserRouter([
                 element: <LoginPage />,
             },
             {
-                path: 'register',
+                path: PUBLIC_ROUTES.REGISTER,
                 element: <RegisterPage />,
             },
         ],
@@ -28,7 +32,7 @@ export const router = createBrowserRouter([
         errorElement: <NotFoundPage />,
     },
     {
-        path: '/manager',
+        path: `/${config_app.MANAGER_PANEL}`,
         element: <MainLayout />,
 
         children: [
@@ -37,13 +41,25 @@ export const router = createBrowserRouter([
                 element: <DashboardPage />,
             },
             {
-                path: 'order-list',
+                path: PRIVATE_ROUTES.ORDERS_LIST,
                 element: <OrderListPage />,
             },
             {
-                path: 'order-create',
+                path: PRIVATE_ROUTES.ORDERS_CREATE,
                 element: <OrderCreatePage />,
             }
         ],
+    },
+    {
+        path: `/${ERROR_ROUTES.ERROR_403}`,
+        element: <ForbiddenPage />,
+    },
+    {
+        path: `/${ERROR_ROUTES.ERROR_404}`,
+        element: <NotFoundPage />,
+    },
+    {
+        path: `/${ERROR_ROUTES.ERROR_500}`,
+        element: <ErrorPage />,
     }
 ]);
