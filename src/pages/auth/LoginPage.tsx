@@ -1,8 +1,7 @@
-import ButtonComponent from '../../components/ui/ButtonComponent.tsx';
+import ButtonComponent from '../../components/ui/ButtonComponent';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormDataType } from '../../schemas/AuthSchema';
@@ -11,7 +10,6 @@ import type { IApiAppResponse, IApiErrorData, IApiLoginData } from '../../interf
 import { setToken } from '../../store/slices/AuthSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { config_app } from '../../../config.ts';
-
 
 const LoginPage = () => {
     const [errorForm, setErrorForm] = useState<string>('');

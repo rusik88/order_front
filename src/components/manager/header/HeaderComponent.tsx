@@ -4,6 +4,7 @@ import { PUBLIC_ROUTES } from '../../../router/routes';
 import { removeToken } from '../../../store/slices/AuthSlice';
 import type { IApiAppResponse } from '../../../interfaces/auth/AuthApiInterfaces';
 import { useLogoutMutation } from '../../../services/AuthApi';
+import ButtonComponent from "../../ui/ButtonComponent.tsx";
 
 const HeaderComponent = () => {
     const dispatch = useAppDispatch();
@@ -31,11 +32,7 @@ const HeaderComponent = () => {
         <header className="h-20 border-b border-white/10 bg-white/5 backdrop-blur-md">
             <div className="h-full px-8 flex items-center justify-between">
                 <h1 className="text-2xl font-bold">Orders</h1>
-                <button
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition cursor-pointer"
-                    disabled={ isLoading }
-                    onClick={() => logoutHandle()}
-                >Logout</button>
+                <ButtonComponent isDisabled={ isLoading } type={ 'inverse' } onClick={ logoutHandle }>Logout</ButtonComponent>
             </div>
         </header>
     );

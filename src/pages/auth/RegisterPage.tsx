@@ -1,4 +1,4 @@
-import ButtonComponent from '../../components/ui/ButtonComponent.tsx';
+import ButtonComponent from '../../components/ui/ButtonComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
