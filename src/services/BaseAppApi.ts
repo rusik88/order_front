@@ -5,13 +5,14 @@ import {
     type FetchBaseQueryError
 } from '@reduxjs/toolkit/query';
 import { config_app } from '../../config.ts';
-import { API_APP, ERROR_ROUTES } from '../router/routes';
+import { ERROR_ROUTES, PUBLIC_ROUTES } from '../router/routes';
+import { removeToken } from '../store/slices/AuthSlice';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: config_app.API_URL,
     credentials: 'include',
     prepareHeaders: headers => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('auth_token');
 
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
@@ -33,9 +34,8 @@ export const baseQueryWithAuth: BaseQueryFn<
     if (result.error) {
         switch (result.error.status) {
             case 401:
-                //localStorage.removeItem('token');
-                window.location.href = API_APP.LOGIN;
-                //console.log(localStorage.removeItem('token'));
+                api.dispatch(removeToken());
+                window.location.href = PUBLIC_ROUTES.LOGIN;
                 break;
 
             case 403:
