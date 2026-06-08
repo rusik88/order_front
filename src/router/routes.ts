@@ -13,10 +13,13 @@ export const API_APP = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
-    ME: '/auth/me'
-} as const;export
+    ME: '/auth/me',
 
-const ERROR_ROUTES = {
+    ROLES: '/roles',
+
+} as const;
+
+export const ERROR_ROUTES = {
     ERROR_403: '/forbidden-page',
     ERROR_404: '/notfound-page',
     ERROR_500: '/error-page',
