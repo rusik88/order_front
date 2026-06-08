@@ -21,6 +21,22 @@ const ButtonComponent = (
         );
     }
 
+    if(type === 'info') {
+        baseClasses = clsx(
+            'px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 hover:bg-indigo-500/30 transition',
+            'disabled:cursor-not-allowed disabled:opacity-60',
+            classNames
+        );
+    }
+
+    if(type === 'error') {
+        baseClasses = clsx(
+            'px-3 py-1 rounded-lg bg-red-500/20 text-red-300 border border-red-400/30 hover:bg-red-500/30 transition',
+            'disabled:cursor-not-allowed disabled:opacity-60',
+            classNames
+        );
+    }
+
     if (link) {
         return (
             <Link to={link} className={baseClasses}>

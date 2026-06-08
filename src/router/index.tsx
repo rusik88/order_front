@@ -5,13 +5,16 @@ import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import MainLayout from '../layouts/MainLayout';
-import DashboardPage from '../pages/manager/DashboardPage.tsx';
-import OrderListPage from '../pages/manager/orders/OrderListPage.tsx';
-import OrderCreatePage from '../pages/manager/orders/OrderCreatePage.tsx';
+import DashboardPage from '../pages/manager/DashboardPage';
 import { config_app } from '../../config';
-import { PUBLIC_ROUTES, PRIVATE_ROUTES, ERROR_ROUTES } from './routes';
+import  {PUBLIC_ROUTES, ERROR_ROUTES, ENTITY_ROUTES } from './routes';
 import ForbiddenPage from '../pages/ForbiddenPage';
 import ErrorPage from '../pages/ErrorPage';
+import RoleListPage from '../pages/manager/roles/RoleListPage';
+import RoleCreatePage from '../pages/manager/roles/RoleCreatePage';
+import RoleUpdatePage from '../pages/manager/roles/RoleUpdatePage';
+import OrderListPage from '../pages/manager/orders/OrderListPage';
+import OrderCreatePage from '../pages/manager/orders/OrderCreatePage';
 
 export const router = createBrowserRouter([
     {
@@ -41,13 +44,36 @@ export const router = createBrowserRouter([
                 element: <DashboardPage />,
             },
             {
-                path: PRIVATE_ROUTES.ORDERS_LIST,
-                element: <OrderListPage />,
+                path: ENTITY_ROUTES.ROLES,
+                children: [
+                    {
+                        index: true,
+                        element: <RoleListPage />
+                    },
+                    {
+                        path: 'create',
+                        element: <RoleCreatePage />
+                    },
+                    {
+                        path: 'update',
+                        element: <RoleUpdatePage />
+                    }
+                ]
             },
             {
-                path: PRIVATE_ROUTES.ORDERS_CREATE,
-                element: <OrderCreatePage />,
-            }
+                path: ENTITY_ROUTES.ORDERS,
+                children: [
+                    {
+                        index: true,
+                        element: <OrderListPage />
+                    },
+                    {
+                        path: 'create',
+                        element: <OrderCreatePage />
+                    }
+                ]
+            },
+
         ],
     },
     {

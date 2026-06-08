@@ -3,10 +3,10 @@ export const PUBLIC_ROUTES = {
     REGISTER: 'register',
 } as const;
 
-export const PRIVATE_ROUTES = {
-    ORDERS_LIST: 'order-list',
-    ORDERS_CREATE: 'order-create',
-    ORDERS_UPDATE: 'order-update',
+export const ENTITY_ROUTES = {
+    ROLES: 'roles',
+    USERS: 'users',
+    ORDERS: 'orders'
 } as const;
 
 export const API_APP = {
