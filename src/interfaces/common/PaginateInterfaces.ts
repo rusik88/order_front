@@ -6,3 +6,8 @@ export interface IPaginateData {
     to: number,
     total: number
 }
+
+export interface IPaginateProps {
+    paginate: IPaginateData,
+    paginateHandle: (page: number) => void
+}

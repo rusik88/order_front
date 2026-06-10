@@ -5,5 +5,6 @@ export interface IPerPageItem {
 
 export interface IPerPageProps {
     options: IPerPageItem[],
-    changeHandle: (val: number) => void;
+    changeHandle: (val: number) => void,
+    resetPaginateHandle?: (val: number) => void
 }

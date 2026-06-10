@@ -10,6 +10,7 @@ import PerPageComponent from '../../../components/common/PerPageComponent';
 import type { IPerPageItem } from '../../../interfaces/common/PerPageInterfaces.ts';
 
 const options: IPerPageItem[] = [
+    { value: 1, label: '1' },
     { value: 2, label: '2' },
     { value: 5, label: '5' },
     { value: 10, label: '10' },
@@ -18,16 +19,16 @@ const options: IPerPageItem[] = [
     { value: 100, label: '100' },
 ];
 
-
 export const RoleListPage = () => {
     const [ page, setPage ] = useState<number>(1);
-    const [ perPage, setPerPage ] = useState<number>(2);
+    const [ perPage, setPerPage ] = useState<number>(1);
     const [ nameFilter, setNameFilter ] = useState<string>('');
 
-    const { data, isLoading }: { data: IApiAppResponse<IRoleResponseData>, isLoading: boolean } = useGetRolesQuery({ page, per_page: perPage, name: nameFilter });
+    const { data, isFetching }: { data: IApiAppResponse<IRoleResponseData>, isFetching: boolean } = useGetRolesQuery({ page, per_page: perPage, name: nameFilter });
+
     return (
         <>
-            {isLoading && (
+            {isFetching && (
                 <LoaderComponent />
             )}
 
@@ -37,7 +38,7 @@ export const RoleListPage = () => {
             </div>
 
             <div className='flex justify-end mb-5'>
-                <PerPageComponent options={options} changeHandle={setPerPage} />
+                <PerPageComponent options={options} changeHandle={setPerPage} resetPaginateHandle={setPage} />
             </div>
 
             <div className='overflow-x-auto rounded-2xl border border-white/10'>
@@ -81,7 +82,9 @@ export const RoleListPage = () => {
                     </tbody>
                 </table>
             </div>
-            <PaginateComponent />
+            {data && data.data !== undefined && data.data.paginate !== undefined && data.data.paginate.total > perPage &&
+                <PaginateComponent paginate={ data.data.paginate } paginateHandle={ setPage } />
+            }
         </>
     );
 };

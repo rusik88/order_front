@@ -1,7 +1,7 @@
 import Select, { type SingleValue } from 'react-select';
-import type { IPerPageItem, IPerPageProps} from '../../interfaces/common/PerPageInterfaces';
+import type { IPerPageItem, IPerPageProps } from '../../interfaces/common/PerPageInterfaces';
 
-const PerPageComponent = ({ options, changeHandle }: IPerPageProps) => {
+const PerPageComponent = ({ options, changeHandle, resetPaginateHandle }: IPerPageProps) => {
     return (
         <Select
             options={options}
@@ -12,8 +12,11 @@ const PerPageComponent = ({ options, changeHandle }: IPerPageProps) => {
                 if (!selectedOption) {
                     return;
                 }
-                console.log(1111);
                 changeHandle(selectedOption.value);
+
+                if(resetPaginateHandle) {
+                    resetPaginateHandle(1);
+                }
             }}
             classNames={{
                 control: ({ isFocused }) =>
