@@ -24,7 +24,7 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
-export const baseQueryWithAuth: BaseQueryFn<
+export const baseQueryApp: BaseQueryFn<
     string | FetchArgs,
     unknown,
     FetchBaseQueryError

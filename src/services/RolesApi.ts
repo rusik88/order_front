@@ -1,15 +1,16 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithAuth } from './BaseAppApi';
+import { baseQueryApp } from './BaseAppApi';
 import { API_APP } from '../router/routes';
+import type { IRoleGetAllQuery } from '../interfaces/manager/RolesInterfaces.ts';
 
 export const RolesApi = createApi({
     reducerPath: 'rolesApi',
-    baseQuery: baseQueryWithAuth,
+    baseQuery: baseQueryApp,
     tagTypes: ['Roles'],
 
     endpoints: builder => ({
         getRoles: builder.query({
-            query: (params?: { page?: number; per_page?: number }) => ({
+            query: (params: IRoleGetAllQuery) => ({
                 url: API_APP.ROLES,
                 method: 'GET',
                 params,

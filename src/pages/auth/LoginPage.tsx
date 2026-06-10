@@ -6,10 +6,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormDataType } from '../../schemas/AuthSchema';
 import { useLoginMutation } from '../../services/AuthApi';
-import type { IApiAppResponse, IApiErrorData, IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
+import type { IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
 import { setToken } from '../../store/slices/AuthSlice';
 import { useAppDispatch } from '../../store/hooks';
-import { config_app } from '../../../config.ts';
+import { config_app } from '../../../config';
+import type { IApiAppResponse, IApiErrorData } from '../../interfaces/common/ApiAppInterfaces';
 
 const LoginPage = () => {
     const [errorForm, setErrorForm] = useState<string>('');

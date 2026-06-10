@@ -1,3 +1,12 @@
+import Select from 'react-select';
+
+const options = [
+    { value: 10, label: '10' },
+    { value: 25, label: '25' },
+    { value: 50, label: '50' },
+    { value: 100, label: '100' },
+];
+
 const OrderListPage = () => {
     return (
         <>
@@ -20,6 +29,40 @@ const OrderListPage = () => {
                     + Create Order
                 </button>
             </div>
+
+            <Select
+                options={options}
+                defaultValue={options[0]}
+                className="w-[90px]"
+                unstyled
+                classNames={{
+                    control: ({ isFocused }) =>
+                        `min-h-[42px] bg-white/5 border rounded-xl cursor-pointer transition
+                        ${ isFocused ? 'border-indigo-400/50' : 'border-white/10 hover:bg-white/10' }
+                     `,
+
+                    valueContainer: () => 'px-3',
+
+                    singleValue: () => 'text-white',
+
+                    input: () => 'text-white',
+
+                    placeholder: () => 'text-slate-400',
+
+                    indicatorSeparator: () => 'hidden',
+
+                    dropdownIndicator: () =>
+                        'text-slate-400 hover:text-white transition',
+
+                    menu: () => 'mt-2 overflow-hidden rounded-xl border border-white/10 bg-slate-900 shadow-xl',
+
+                    menuList: () => 'p-0',
+
+                    option: ({ isFocused, isSelected }) =>
+                        `px-3 py-2 cursor-pointer transition
+                        ${ isSelected ? 'bg-indigo-500/20 text-indigo-300' : isFocused ? 'bg-white/10 text-white' : 'text-white' } `,
+                    }}
+            />
 
             {/* Table */}
             <div className='overflow-x-auto rounded-2xl border border-white/10'>

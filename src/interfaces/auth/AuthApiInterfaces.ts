@@ -1,9 +1,3 @@
-export interface IApiAppResponse<T> {
-    success: boolean,
-    message: string,
-    data: T
-}
-
 export interface IApiLoginData {
     auth_token: string,
     user: IApiUser
@@ -21,7 +15,3 @@ export interface IApiUser {
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IApiRegisterData extends IApiLoginData {}
 
-export interface IApiErrorData {
-    data: IApiAppResponse<[]>,
-    status: number
-}

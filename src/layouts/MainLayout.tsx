@@ -8,7 +8,7 @@ import FooterComponent from '../components/manager/footer/FooterComponent';
 import SidebarComponent from '../components/manager/sidebar/SidebarComponent';
 import { PUBLIC_ROUTES } from '../router/routes.ts';
 import AlertComponent from '../components/common/AlertComponent';
-import LoaderComponent from "../components/common/LoaderComponent.tsx";
+import LoaderComponent from '../components/common/LoaderComponent';
 
 export default function MainLayout() {
     const auth_token = useAppSelector(state => state.auth.auth_token);

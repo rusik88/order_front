@@ -16,6 +16,8 @@ export const API_APP = {
     ME: '/auth/me',
 
     ROLES: '/roles',
+    ORDERS: '/orders',
+    USERS: '/users',
 
 } as const;
 
