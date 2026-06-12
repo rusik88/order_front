@@ -15,17 +15,7 @@ const OrderListPage = () => {
                     Orders List
                 </h2>
 
-                <button
-                    className='
-                    flex items-center gap-2
-                    px-4 py-2
-                    rounded-xl
-                    bg-white/5
-                    border border-white/10
-                    hover:bg-white/10
-                    transition
-                '
-                >
+                <button className='flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition'>
                     + Create Order
                 </button>
             </div>

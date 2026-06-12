@@ -21,9 +21,17 @@ const ButtonComponent = (
         );
     }
 
+    if(type === 'inverse_info') {
+        baseClasses = clsx(
+            'px-5 py-3 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-400/30 hover:bg-blue-500/30 transition cursor-pointer',
+            'disabled:cursor-not-allowed disabled:opacity-60',
+            classNames
+        );
+    }
+
     if(type === 'info') {
         baseClasses = clsx(
-            'px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 hover:bg-indigo-500/30 transition',
+            'px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 hover:bg-indigo-500/30 transition cursor-pointer',
             'disabled:cursor-not-allowed disabled:opacity-60',
             classNames
         );

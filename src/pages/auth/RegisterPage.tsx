@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, type RegisterFormDataType } from '../../schemas/AuthSchema';
-import type { IApiAppResponse, IApiErrorData, IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
+import type { IApiAppResponse, IApiErrorData } from '../../interfaces/common/ApiAppInterfaces';
 import { setToken } from '../../store/slices/AuthSlice';
 import { useRegistrationMutation } from '../../services/AuthApi';
 import { useAppDispatch } from '../../store/hooks';
 import { config_app } from '../../../config.ts';
+import type { IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
 
 const RegisterPage = () => {
     const dispatch = useAppDispatch();
@@ -59,7 +60,6 @@ const RegisterPage = () => {
 
     return (
         <form action="/" method="POST" onSubmit={handleSubmit(onSubmit)}>
-
             <div className="w-[600px] rounded-3xl border border-gray-600 bg-gray-300/5 p-10 backdrop-blur-sm shadow-2xl">
                 <h1 className="mb-2 text-center text-4xl font-bold text-white">Register</h1>
                 <p className="mb-6 text-center text-xl text-slate-400">Create a new account</p>

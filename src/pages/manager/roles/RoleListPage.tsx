@@ -8,6 +8,7 @@ import type { IRoleItem, IRoleResponseData } from '../../../interfaces/manager/R
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import PerPageComponent from '../../../components/common/PerPageComponent';
 import type { IPerPageItem } from '../../../interfaces/common/PerPageInterfaces.ts';
+import { fullLink } from '../../../functions/helperFunctions.ts';
 
 const options: IPerPageItem[] = [
     { value: 5, label: '5' },
@@ -50,7 +51,7 @@ export const RoleListPage = () => {
 
             <div className='flex items-center justify-between mb-6'>
                 <h2 className='text-3xl font-bold'>Roles List</h2>
-                <ButtonComponent type={ 'inverse' } link={ `${ENTITY_ROUTES.ROLES}/create` }>+ Create Role</ButtonComponent>
+                <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/create`) }>+ Create Role</ButtonComponent>
             </div>
 
             <div className='flex justify-between mb-5'>

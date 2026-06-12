@@ -6,6 +6,6 @@ export interface IButtonProps {
     classNames?: string;
     isDisabled?: boolean;
     link?: string;
-    type?: 'default' | 'inverse' | 'info' | 'error',
+    type?: 'default' | 'inverse' | 'info' | 'error' | 'inverse_info',
     onClick?:  (event: React.MouseEvent<HTMLButtonElement>) => void;
 }

@@ -20,3 +20,12 @@ export interface IRoleResponseData {
     roles: IRoleItem[]
 }
 
+export interface IEntity {
+    title: string,
+    slug: string
+}
+
+export interface IRoleData {
+    'role': IRoleItem
+}
+
