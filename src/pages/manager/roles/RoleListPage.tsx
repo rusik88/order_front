@@ -24,7 +24,12 @@ export const RoleListPage = () => {
     const [ nameFilter, setNameFilter ] = useState<string>('');
     const [search, setSearch] = useState('');
 
-    const { data, isFetching }: { data: IApiAppResponse<IRoleResponseData>, isFetching: boolean } = useGetRolesQuery({ page, per_page: perPage, name: nameFilter });
+    const [sortField, setSortField] = useState<'name' | 'slug' | 'id'>('id');
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+
+    const { data, isFetching }: { data: IApiAppResponse<IRoleResponseData>, isFetching: boolean } = useGetRolesQuery(
+        { page, per_page: perPage, name: nameFilter, sort_field: sortField, sort_direction: sortDirection }
+    );
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -84,9 +89,63 @@ export const RoleListPage = () => {
                 <table className='w-full text-left'>
                     <thead className='bg-white/5 text-slate-300 text-sm'>
                     <tr>
-                        <th className='p-4'>ID</th>
-                        <th className='p-4'>Name</th>
-                        <th className='p-4'>Slug</th>
+                        <th
+                            className="p-4 cursor-pointer select-none"
+                            onClick={() => {
+                                if (sortField === 'id') {
+                                    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+                                } else {
+                                    setSortField('id');
+                                    setSortDirection('asc');
+                                }
+                                setPage(1);
+                            }}
+                        >
+                            ID
+                            {sortField === 'id' && (
+                                <span className="ml-1 text-xs text-indigo-400">
+                                    {sortDirection === 'asc' ? '↑' : '↓'}
+                                </span>
+                            )}
+                        </th>
+                        <th
+                            className="p-4 cursor-pointer select-none"
+                            onClick={() => {
+                                if (sortField === 'name') {
+                                    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+                                } else {
+                                    setSortField('name');
+                                    setSortDirection('asc');
+                                }
+                                setPage(1);
+                            }}
+                        >
+                            Name
+                            {sortField === 'name' && (
+                                <span className="ml-1 text-xs text-indigo-400">
+                                    {sortDirection === 'asc' ? '↑' : '↓'}
+                                </span>
+                            )}
+                        </th>
+                        <th
+                            className="p-4 cursor-pointer select-none"
+                            onClick={() => {
+                                if (sortField === 'slug') {
+                                    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+                                } else {
+                                    setSortField('slug');
+                                    setSortDirection('asc');
+                                }
+                                setPage(1);
+                            }}
+                        >
+                            Slug
+                            {sortField === 'slug' && (
+                                <span className="ml-1 text-xs text-indigo-400">
+                                    {sortDirection === 'asc' ? '↑' : '↓'}
+                                </span>
+                            )}
+                        </th>
                         <th className='p-4 text-right'>Actions</th>
                     </tr>
                     </thead>
