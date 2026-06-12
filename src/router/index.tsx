@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
                         element: <RoleCreatePage />
                     },
                     {
-                        path: 'update',
+                        path: 'edit/:id',
                         element: <RoleUpdatePage />
                     }
                 ]

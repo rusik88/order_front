@@ -170,8 +170,8 @@ export const RoleListPage = () => {
                                     </td>
 
                                     <td className='p-4 text-right space-x-2'>
-                                        <ButtonComponent type={ 'info' } link={ `${ENTITY_ROUTES.ROLES}/edit/${item.id}` }>Edit</ButtonComponent>
-                                        <ButtonComponent type={ 'error' } link={ `${ENTITY_ROUTES.ROLES}/edit` }>Delete</ButtonComponent>
+                                        <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/edit/${item.id}`) }>Edit</ButtonComponent>
+                                        <ButtonComponent type={ 'error' }>Delete</ButtonComponent>
                                     </td>
                                 </tr>
                             )

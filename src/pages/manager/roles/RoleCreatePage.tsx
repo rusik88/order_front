@@ -4,7 +4,7 @@ import { fullLink }  from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
 import type { IEntity, IRoleData } from '../../../interfaces/manager/RolesInterfaces';
 import { useForm } from 'react-hook-form';
-import { type RoleCreateFormData, roleCreateSchema } from '../../../schemas/RolesSchema';
+import { type RoleFormData, roleFormSchema } from '../../../schemas/RolesSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import { useCreateRoleMutation } from '../../../services/RolesApi.ts';
@@ -25,8 +25,8 @@ export const RoleCreatePage = () => {
         handleSubmit,
         reset,
         formState: { errors, isSubmitting },
-    } = useForm<RoleCreateFormData>({
-        resolver: zodResolver(roleCreateSchema),
+    } = useForm<RoleFormData>({
+        resolver: zodResolver(roleFormSchema),
         defaultValues: {
             permissions: [],
         },
@@ -35,7 +35,7 @@ export const RoleCreatePage = () => {
     const [createRole, { isLoading }] = useCreateRoleMutation();
 
     const onSubmit = async (
-        data: RoleCreateFormData
+        data: RoleFormData
     ) => {
         try {
             const res: IApiAppResponse<IRoleData> = await createRole(data).unwrap();
@@ -77,7 +77,7 @@ export const RoleCreatePage = () => {
     
     return (
         <>
-            {isSubmitting && isLoading && <LoaderComponent />}
+            {isSubmitting || isLoading && <LoaderComponent />}
 
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold">Create Order</h2>
