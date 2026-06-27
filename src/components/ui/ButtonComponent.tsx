@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import type { IButtonProps } from '../../interfaces/ui/ButtonInterface.ts';
+import type { IButtonProps } from '../../interfaces/ui/ElementsInterface.ts';
 
 const ButtonComponent = (
     { children, classNames, isDisabled, link, type, onClick } : IButtonProps) => {

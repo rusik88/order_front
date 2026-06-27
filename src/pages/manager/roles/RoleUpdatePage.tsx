@@ -37,6 +37,9 @@ export const RoleUpdatePage = () => {
     const { data, isFetching }: { data: IApiAppResponse<IRoleData>, isFetching: boolean } = useGetRoleQuery(roleId);
     const [updateRole, { isLoading }] = useUpdateRoleMutation();
 
+    const role = data?.data?.role;
+    const isSuperAdmin = role?.slug === 'super_admin';
+
     useEffect(() => {
         if (data?.data?.role) {
             const role = data.data.role;
@@ -48,7 +51,6 @@ export const RoleUpdatePage = () => {
             });
         }
     }, [data, reset]);
-
 
     const onSubmit = async (
         data: RoleFormData
@@ -95,7 +97,9 @@ export const RoleUpdatePage = () => {
             {(isSubmitting || isFetching || isLoading) && <LoaderComponent />}
 
             <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold">Create Order</h2>
+                <h2 className="text-3xl font-bold">
+                    Update Role "{role?.name}"
+                </h2>
                 <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ROLES}`) }>Back to List</ButtonComponent>
             </div>
 
@@ -103,7 +107,7 @@ export const RoleUpdatePage = () => {
                 <div className="grid grid-cols-2 gap-6">
                     <div>
                         <label className="block text-slate-300 mb-2">Title</label>
-                        <InputComponent type="text" placeholder="Manager" {...register('name')} />
+                        <InputComponent type="text" placeholder="Manager" isDisabled={isSuperAdmin} {...register('name')} />
                         {errors.name && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.name.message}
@@ -113,7 +117,7 @@ export const RoleUpdatePage = () => {
 
                     <div>
                         <label className="block text-slate-300 mb-2">Slug</label>
-                        <InputComponent type="text" placeholder="manager" {...register('slug')} />
+                        <InputComponent type="text" placeholder="manager" isDisabled={isSuperAdmin} {...register('slug')} />
                         {errors.slug && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.slug.message}
@@ -143,7 +147,7 @@ export const RoleUpdatePage = () => {
                                             <td className="p-4">{ item.title }</td>
 
                                             <td className="text-center">
-                                                <input type="checkbox" {...register('permissions')} value={ `${item.slug}:read` } />
+                                                <input type="checkbox" disabled={isSuperAdmin} {...register('permissions')} value={ `${item.slug}:read` } />
                                                 {errors.permissions && (
                                                     <p className="mt-2 text-sm text-red-400">
                                                         {errors.permissions.message}
@@ -152,15 +156,15 @@ export const RoleUpdatePage = () => {
                                             </td>
 
                                             <td className="text-center">
-                                                <input type="checkbox" {...register('permissions')} value={ `${item.slug}:create` } />
+                                                <input type="checkbox" disabled={isSuperAdmin} {...register('permissions')} value={ `${item.slug}:create` } />
                                             </td>
 
                                             <td className="text-center">
-                                                <input type="checkbox" {...register('permissions')} value={ `${item.slug}:update` } />
+                                                <input type="checkbox" disabled={isSuperAdmin} {...register('permissions')} value={ `${item.slug}:update` } />
                                             </td>
 
                                             <td className="text-center">
-                                                <input type="checkbox" {...register('permissions')} value={ `${item.slug}:delete` } />
+                                                <input type="checkbox" disabled={isSuperAdmin} {...register('permissions')} value={ `${item.slug}:delete` } />
                                             </td>
                                         </tr>
                                     );
@@ -174,7 +178,7 @@ export const RoleUpdatePage = () => {
 
                 <div className="flex justify-end gap-3 pt-4">
                     <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ROLES}`) }>Cancel</ButtonComponent>
-                    <ButtonComponent type={ 'inverse_info' } isDisabled={ isSubmitting && isLoading }>Update Order</ButtonComponent>
+                    <ButtonComponent type={ 'inverse_info' } isDisabled={ (isSubmitting && isLoading) || isSuperAdmin }>Update Role</ButtonComponent>
                 </div>
             </form>
         </>

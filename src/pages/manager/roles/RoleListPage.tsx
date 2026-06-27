@@ -212,8 +212,12 @@ export const RoleListPage = () => {
                                     </td>
 
                                     <td className='p-4 text-right space-x-2'>
-                                        <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/edit/${item.id}`) }>Edit</ButtonComponent>
-                                        <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>
+                                        { item.slug !== 'super_admin' &&
+                                            <>
+                                                <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/edit/${item.id}`) }>Edit</ButtonComponent>
+                                                <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>
+                                            </>
+                                        }
                                     </td>
                                 </tr>
                             )

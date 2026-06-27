@@ -1,4 +1,4 @@
-import  { type ReactNode } from 'react';
+import {type InputHTMLAttributes, type ReactNode} from 'react';
 import * as React from 'react';
 
 export interface IButtonProps {
@@ -8,4 +8,9 @@ export interface IButtonProps {
     link?: string;
     type?: 'default' | 'inverse' | 'info' | 'error' | 'inverse_info',
     onClick?:  (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export interface InputComponentProps extends InputHTMLAttributes<HTMLInputElement> {
+    classNames?: string,
+    isDisabled?: boolean
 }
