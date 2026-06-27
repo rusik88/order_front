@@ -7,7 +7,7 @@ import NotFoundPage from '../pages/NotFoundPage';
 import MainLayout from '../layouts/MainLayout';
 import DashboardPage from '../pages/manager/DashboardPage';
 import { config_app } from '../../config';
-import  {PUBLIC_ROUTES, ERROR_ROUTES, ENTITY_ROUTES } from './routes';
+import  { PUBLIC_ROUTES, ERROR_ROUTES, ENTITY_ROUTES } from './routes';
 import ForbiddenPage from '../pages/ForbiddenPage';
 import ErrorPage from '../pages/ErrorPage';
 import RoleListPage from '../pages/manager/roles/RoleListPage';
@@ -15,6 +15,7 @@ import RoleCreatePage from '../pages/manager/roles/RoleCreatePage';
 import RoleUpdatePage from '../pages/manager/roles/RoleUpdatePage';
 import OrderListPage from '../pages/manager/orders/OrderListPage';
 import OrderCreatePage from '../pages/manager/orders/OrderCreatePage';
+import SettingsPage from '../pages/manager/settings/SettingsPage';
 
 export const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <DashboardPage />,
+            },
+            {
+                path: ENTITY_ROUTES.SETTINGS,
+                element: <SettingsPage />,
             },
             {
                 path: ENTITY_ROUTES.ROLES,

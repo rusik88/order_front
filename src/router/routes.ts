@@ -6,7 +6,8 @@ export const PUBLIC_ROUTES = {
 export const ENTITY_ROUTES = {
     ROLES: 'roles',
     USERS: 'users',
-    ORDERS: 'orders'
+    ORDERS: 'orders',
+    SETTINGS: 'settings'
 } as const;
 
 export const API_APP = {

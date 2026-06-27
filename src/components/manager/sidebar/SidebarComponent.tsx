@@ -22,6 +22,11 @@ const SidebarComponent = () => {
                         <Link to={ fullLink(ENTITY_ROUTES.ROLES) }>Roles</Link>
                     </div>
                 </div>
+                <div>
+                    <div className="mb-3 text-lg font-semibold">
+                        <Link to={ fullLink(ENTITY_ROUTES.SETTINGS) }>Settings</Link>
+                    </div>
+                </div>
             </nav>
         </aside>
     );
