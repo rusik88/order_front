@@ -2,10 +2,10 @@ import { useAppDispatch } from '../../../store/hooks';
 import { Navigate } from 'react-router-dom';
 import { PUBLIC_ROUTES } from '../../../router/routes';
 import { removeToken } from '../../../store/slices/AuthSlice';
-import type {IApiAppResponse, IApiErrorData} from '../../../interfaces/auth/AuthApiInterfaces';
 import { useLogoutMutation } from '../../../services/AuthApi';
 import ButtonComponent from '../../ui/ButtonComponent';
-import { showAlert } from "../../../store/slices/AlertSlice";
+import { showAlert } from '../../../store/slices/AlertSlice';
+import type { IApiAppResponse, IApiErrorData } from '../../../interfaces/common/ApiAppInterfaces.ts';
 
 const HeaderComponent = () => {
     const dispatch = useAppDispatch();

@@ -39,7 +39,7 @@ const ButtonComponent = (
 
     if(type === 'error') {
         baseClasses = clsx(
-            'px-3 py-1 rounded-lg bg-red-500/20 text-red-300 border border-red-400/30 hover:bg-red-500/30 transition',
+            'px-3 py-1 rounded-lg bg-red-500/20 text-red-300 border border-red-400/30 hover:bg-red-500/30 transition cursor-pointer',
             'disabled:cursor-not-allowed disabled:opacity-60',
             classNames
         );

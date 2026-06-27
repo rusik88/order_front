@@ -77,7 +77,7 @@ export const RoleCreatePage = () => {
     
     return (
         <>
-            {isSubmitting || isLoading && <LoaderComponent />}
+            {(isSubmitting || isLoading) && <LoaderComponent />}
 
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold">Create Order</h2>

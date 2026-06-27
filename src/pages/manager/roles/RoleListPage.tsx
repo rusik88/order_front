@@ -1,14 +1,18 @@
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 import { ENTITY_ROUTES } from '../../../router/routes';
 import PaginateComponent from '../../../components/common/PaginateComponent';
-import { useGetRolesQuery } from '../../../services/RolesApi';
+import { useDeleteRoleMutation, useGetRolesQuery } from '../../../services/RolesApi';
 import { useEffect, useState } from 'react';
 import type { IApiAppResponse } from '../../../interfaces/common/ApiAppInterfaces';
 import type { IRoleItem, IRoleResponseData } from '../../../interfaces/manager/RolesInterfaces';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import PerPageComponent from '../../../components/common/PerPageComponent';
-import type { IPerPageItem } from '../../../interfaces/common/PerPageInterfaces.ts';
-import { fullLink } from '../../../functions/helperFunctions.ts';
+import type { IPerPageItem } from '../../../interfaces/common/PerPageInterfaces';
+import { fullLink } from '../../../functions/helperFunctions';
+import ModalComponent from '../../../components/common/ModalComponent';
+import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
+import { useAppDispatch } from '../../../store/hooks';
+
 
 const options: IPerPageItem[] = [
     { value: 5, label: '5' },
@@ -23,6 +27,11 @@ export const RoleListPage = () => {
     const [ perPage, setPerPage ] = useState<number>(options[0].value);
     const [ nameFilter, setNameFilter ] = useState<string>('');
     const [search, setSearch] = useState('');
+
+    const dispatch = useAppDispatch();
+
+    const [ deleteRole, setDeleteRole ] = useState<IRoleItem | null>(null);
+    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
     const [sortField, setSortField] = useState<'name' | 'slug' | 'id'>('id');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -48,9 +57,42 @@ export const RoleListPage = () => {
         return () => clearTimeout(timer);
     }, [search]);
 
+    const deleteHandle = (idRole: number) => {
+        const role: IRoleItem | undefined = data.data.roles.find((item: IRoleItem) => item.id === idRole);
+
+        if(role !== undefined) {
+            setDeleteRole(role);
+            setShowDeleteModal(true);
+        }
+    };
+
+    const [deleteRoleMutation, { isLoading }] = useDeleteRoleMutation();
+
+    const deleteRoleHandle = async (id: number) => {
+        setShowDeleteModal(false);
+        const res: IApiAppResponse<[]> = await deleteRoleMutation(id).unwrap();
+
+        if(res.data !== undefined && res.data !== null && deleteRole !== null) {
+            dispatch(showAlert({
+                text: `Role "${deleteRole.name}" was deleted`,
+                type: 'success'
+            }));
+
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+        } else {
+            throw {
+                data: {
+                    message: 'Authentication failed. Please check your credentials and try again.'
+                }
+            };
+        }
+    };
+
     return (
         <>
-            {isFetching && (
+            {(isFetching || isLoading) && (
                 <LoaderComponent />
             )}
 
@@ -171,7 +213,7 @@ export const RoleListPage = () => {
 
                                     <td className='p-4 text-right space-x-2'>
                                         <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/edit/${item.id}`) }>Edit</ButtonComponent>
-                                        <ButtonComponent type={ 'error' }>Delete</ButtonComponent>
+                                        <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>
                                     </td>
                                 </tr>
                             )
@@ -183,6 +225,19 @@ export const RoleListPage = () => {
             {data && data.data !== undefined && data.data.paginate !== undefined && data.data.paginate.total > perPage &&
                 <PaginateComponent paginate={ data.data.paginate } paginateHandle={ setPage } />
             }
+
+            <ModalComponent isShow={showDeleteModal} >
+                {deleteRole !== null && (
+                    <>
+                        <p>Delete Role "{ deleteRole.name }"</p>
+                        <div className="flex justify-end mt-6 space-x-3">
+                        <ButtonComponent type={ 'error' } onClick={ () => deleteRoleHandle(deleteRole.id) }>Delete</ButtonComponent>
+                            <ButtonComponent onClick={ () => setShowDeleteModal(false) } type={ 'info' }>Close</ButtonComponent>
+                        </div>
+                    </>
+                )}
+
+            </ModalComponent>
         </>
     );
 };

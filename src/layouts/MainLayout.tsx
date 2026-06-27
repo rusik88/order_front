@@ -2,7 +2,6 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useMeQuery } from '../services/AuthApi';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { removeToken } from '../store/slices/AuthSlice';
-
 import HeaderComponent from '../components/manager/header/HeaderComponent';
 import FooterComponent from '../components/manager/footer/FooterComponent';
 import SidebarComponent from '../components/manager/sidebar/SidebarComponent';
