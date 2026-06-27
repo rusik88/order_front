@@ -20,6 +20,8 @@ export const API_APP = {
     ORDERS: '/orders',
     USERS: '/users',
 
+    SETTINGS: '/settings'
+
 } as const;
 
 export const ERROR_ROUTES = {
