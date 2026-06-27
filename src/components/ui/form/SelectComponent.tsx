@@ -19,7 +19,7 @@ const SelectComponent = ({ options, classNames, changeHandle }: ISelectProps) =>
             }}
             classNames={{
                 control: ({ isFocused }) =>
-                    `min-h-[42px] p-4 bg-white/5 border rounded-xl cursor-pointer transition
+                    `min-h-[42px] p-4 bg-white/5 border rounded-xl cursor-pointer transition cursor-pointer
                         ${ isFocused ? 'border-indigo-400/50' : 'border-white/10 hover:bg-white/10' }
                      `,
                 valueContainer: () => 'pr-1',

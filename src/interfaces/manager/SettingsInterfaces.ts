@@ -1,4 +1,10 @@
+export type settingValueType = ISettingItemValueOption[] | string | number;
+
 export interface ISettingsData {
+    settings: ISettingItem[]
+}
+
+export interface SettingsProps extends ISettingsData {
     settings: ISettingItem[]
 }
 
@@ -12,9 +18,6 @@ export interface ISettingItem {
     title: string,
     key: string,
     type: string,
-    value: ISettingItemValueOption[] | string | number
+    value: settingValueType
 }
 
-export interface SettingsProps {
-    settings: ISettingItem[]
-}
