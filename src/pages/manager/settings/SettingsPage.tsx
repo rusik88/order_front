@@ -1,9 +1,32 @@
 import ButtonComponent from '../../../components/ui/ButtonComponent';
-import { InputComponent} from '../../../components/ui/form/InputComponent';
+import type { IApiAppResponse } from '../../../interfaces/common/ApiAppInterfaces';
+import { useGetSettingsQuery } from '../../../services/SettingsApi';
+import type { ISettingItem, ISettingsData } from '../../../interfaces/manager/SettingsInterfaces.ts';
+import LoaderComponent from '../../../components/common/LoaderComponent';
+import { InputComponent } from '../../../components/ui/form/InputComponent.tsx';
+import type { ISelectOption } from '../../../interfaces/ui/ElementsInterface.ts';
+import SelectComponent from '../../../components/ui/form/SelectComponent.tsx';
+
+
 
 const SettingsPage = () => {
+
+    const { data, isFetching }: { data: IApiAppResponse<ISettingsData>, isFetching: boolean } = useGetSettingsQuery(undefined);
+
+    const settings = data?.data?.settings;
+    const role_options: ISelectOption[] = [];
+
+    if(settings !== undefined) {
+        settings.map((item: ISettingItem) => {
+            const value = item.value as string | number;
+            role_options.push({ label: item.key, value: value });
+        });
+    }
+
     return (
         <>
+            {isFetching && <LoaderComponent />}
+
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold">
                     Settings
@@ -13,42 +36,30 @@ const SettingsPage = () => {
             <form className="space-y-6">
 
                 <div className="rounded-2xl border border-white/10 overflow-hidden">
-                    <table className="w-full">
-                        <tbody>
-
-                        {/* ROW 1 */}
-                        <tr className="border-t border-white/10">
-                            <td className="p-4 w-1/3 text-slate-300">
-                                Site Name
-                            </td>
-                            <td className="p-4">
-                                <InputComponent type="text" />
-                            </td>
-                        </tr>
-
-                        {/* ROW 2 */}
-                        <tr className="border-t border-white/10">
-                            <td className="p-4 w-1/3 text-slate-300">
-                                Lifetime Token
-                            </td>
-                            <td className="p-4">
-                                <InputComponent type="text" />
-                            </td>
-                        </tr>
-
-                        {/* ROW 3 */}
-                        <tr className="border-t border-white/10">
-                            <td className="p-4 w-1/3 text-slate-300">
-                                Default Role
-                            </td>
-                            <td className="p-4">
-                                <InputComponent type="text" />
-                            </td>
-                        </tr>
-
-                        </tbody>
-
-                    </table>
+                    {settings &&
+                        settings.map((setting: ISettingItem) => {
+                            return (
+                                <div className="w-full" key={ setting.key }>
+                                    <div className="flex items-center justify-between w-full border-t border-white/10">
+                                        <div className="w-[30%] p-4 text-slate-300">
+                                            { setting.title }
+                                        </div>
+                                        <div className="p-4 w-[65%]">
+                                            {setting.type === 'text' &&
+                                                <InputComponent type="text" />
+                                            }
+                                            {setting.type === 'number' &&
+                                                <InputComponent type="number" />
+                                            }
+                                            {setting.type === 'role' &&
+                                                <SelectComponent options={ role_options } changeHandle={ () => {} } />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
                 </div>
 
                 <div className="flex justify-end gap-3 pt-4">

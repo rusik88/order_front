@@ -7,24 +7,25 @@ import type { IApiAppResponse } from '../../../interfaces/common/ApiAppInterface
 import type { IRoleItem, IRoleResponseData } from '../../../interfaces/manager/RolesInterfaces';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import PerPageComponent from '../../../components/common/PerPageComponent';
-import type { IPerPageItem } from '../../../interfaces/common/PerPageInterfaces';
 import { fullLink } from '../../../functions/helperFunctions';
 import ModalComponent from '../../../components/common/ModalComponent';
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import { useAppDispatch } from '../../../store/hooks';
+import type { ISelectOption } from '../../../interfaces/ui/ElementsInterface.ts';
 
 
-const options: IPerPageItem[] = [
-    { value: 5, label: '5' },
-    { value: 10, label: '10' },
-    { value: 25, label: '25' },
-    { value: 50, label: '50' },
-    { value: 100, label: '100' },
+const options: ISelectOption[] = [
+    { value: 5, label: '5', selected: true },
+    { value: 8, label: '8', selected: false },
+    { value: 10, label: '10', selected: false },
+    { value: 25, label: '25', selected: false },
+    { value: 50, label: '50', selected: false },
+    { value: 100, label: '100', selected: false },
 ];
 
 export const RoleListPage = () => {
     const [ page, setPage ] = useState<number>(1);
-    const [ perPage, setPerPage ] = useState<number>(options[0].value);
+    const [ perPage, setPerPage ] = useState<number | string>(options.find((item: ISelectOption) => item.selected)!.value);
     const [ nameFilter, setNameFilter ] = useState<string>('');
     const [search, setSearch] = useState('');
 
@@ -90,6 +91,11 @@ export const RoleListPage = () => {
         }
     };
 
+    const perPageHandle = (value: number | string) => {
+        setPerPage(value);
+        setPage(1);
+    };
+
     return (
         <>
             {(isFetching || isLoading) && (
@@ -124,7 +130,7 @@ export const RoleListPage = () => {
                         />
                     </svg>
                 </div>
-                <PerPageComponent options={options} changeHandle={setPerPage} resetPaginateHandle={setPage} />
+                <PerPageComponent options={options} classNames="w-[90px]" changeHandle={perPageHandle} />
             </div>
 
             <div className='overflow-x-auto rounded-2xl border border-white/10'>
@@ -226,7 +232,7 @@ export const RoleListPage = () => {
                     </tbody>
                 </table>
             </div>
-            {data && data.data !== undefined && data.data.paginate !== undefined && data.data.paginate.total > perPage &&
+            {data && data.data !== undefined && data.data.paginate !== undefined && data.data.paginate.total > Number(perPage) &&
                 <PaginateComponent paginate={ data.data.paginate } paginateHandle={ setPage } />
             }
 

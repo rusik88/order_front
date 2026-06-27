@@ -1,7 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryApp} from './BaseAppApi.ts';
 import { API_APP } from '../router/routes.ts';
-import type { ISettingsQuery } from '../interfaces/manager/SettingsInterfaces';
 
 export const SettingsApi = createApi({
     reducerPath: 'settingsApi',
@@ -11,10 +10,9 @@ export const SettingsApi = createApi({
     endpoints: builder => ({
 
         getSettings: builder.query({
-            query: (params: ISettingsQuery) => ({
+            query: () => ({
                 url: API_APP.SETTINGS,
-                method: 'GET',
-                params,
+                method: 'GET'
             }),
             providesTags: ['Settings'],
         }),

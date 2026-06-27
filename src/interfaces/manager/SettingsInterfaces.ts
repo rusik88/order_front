@@ -1,5 +1,5 @@
-export interface ISettingsQuery {
-    settings: Record<string, ISettingItem>
+export interface ISettingsData {
+    settings: ISettingItem[]
 }
 
 export interface ISettingItemValueOption {
@@ -10,5 +10,11 @@ export interface ISettingItemValueOption {
 
 export interface ISettingItem {
     title: string,
+    key: string,
+    type: string,
     value: ISettingItemValueOption[] | string | number
+}
+
+export interface SettingsProps {
+    settings: ISettingItem[]
 }

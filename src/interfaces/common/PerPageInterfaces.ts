@@ -1,10 +1,7 @@
-export interface IPerPageItem {
-    value: number,
-    label: string
-}
+import type { ISelectOption } from '../ui/ElementsInterface.ts';
 
 export interface IPerPageProps {
-    options: IPerPageItem[],
-    changeHandle: (val: number) => void,
-    resetPaginateHandle?: (val: number) => void
+    options: ISelectOption[],
+    classNames?: string,
+    changeHandle: (val: number | string) => void
 }

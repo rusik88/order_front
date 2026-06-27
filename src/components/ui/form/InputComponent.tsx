@@ -1,7 +1,5 @@
 import clsx from 'clsx';
-import type { InputComponentProps} from '../../../interfaces/ui/ElementsInterface.ts';
-
-
+import type { InputComponentProps} from '../../../interfaces/ui/ElementsInterface';
 
 export const InputComponent = ({ classNames, isDisabled, ...props }: InputComponentProps) => {
     return (

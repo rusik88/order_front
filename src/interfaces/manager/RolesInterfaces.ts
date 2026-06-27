@@ -2,7 +2,7 @@ import type { IPaginateData } from '../common/PaginateInterfaces.ts';
 
 export interface IRoleGetAllQuery {
     page: number,
-    per_page: number,
+    per_page: number | string,
     name: string,
     sort_field: string,
     sort_direction: string
