@@ -16,6 +16,7 @@ import RoleUpdatePage from '../pages/manager/roles/RoleUpdatePage';
 import OrderListPage from '../pages/manager/orders/OrderListPage';
 import OrderCreatePage from '../pages/manager/orders/OrderCreatePage';
 import SettingsPage from '../pages/manager/settings/SettingsPage';
+import UserListPage from '../pages/manager/users/UserListPage.tsx';
 
 export const router = createBrowserRouter([
     {
@@ -63,6 +64,23 @@ export const router = createBrowserRouter([
                         path: 'edit/:id',
                         element: <RoleUpdatePage />
                     }
+                ]
+            },
+            {
+                path: ENTITY_ROUTES.USERS,
+                children: [
+                    {
+                        index: true,
+                        element: <UserListPage />
+                    },
+                    /*{
+                        path: 'create',
+                        element: <RoleCreatePage />
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: <RoleUpdatePage />
+                    }*/
                 ]
             },
             {

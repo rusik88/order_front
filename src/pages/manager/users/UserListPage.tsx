@@ -1,33 +1,34 @@
-import ButtonComponent from '../../../components/ui/ButtonComponent';
-import { ENTITY_ROUTES } from '../../../router/routes';
-import PaginateComponent from '../../../components/common/PaginateComponent';
-import { useDeleteRoleMutation, useGetRolesQuery } from '../../../services/RolesApi';
 import { useEffect, useState } from 'react';
-import type { IApiAppResponse } from '../../../interfaces/common/ApiAppInterfaces';
-import type { IRoleItem, IRoleResponseData } from '../../../interfaces/manager/RolesInterfaces';
-import LoaderComponent from '../../../components/common/LoaderComponent';
-import PerPageComponent from '../../../components/common/PerPageComponent';
-import { fullLink } from '../../../functions/helperFunctions';
-import ModalComponent from '../../../components/common/ModalComponent';
-import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import { useAppDispatch } from '../../../store/hooks';
+import type { IUserItem, IUserResponseData } from '../../../interfaces/manager/UsersInterfaces';
+import type { IApiAppResponse } from '../../../interfaces/common/ApiAppInterfaces';
+import {useDeleteUserMutation, useGetUsersQuery} from '../../../services/UsersApi';
+import { useDeleteRoleMutation } from '../../../services/RolesApi';
+import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
+import LoaderComponent from '../../../components/common/LoaderComponent';
+import ButtonComponent from '../../../components/ui/ButtonComponent';
+import { fullLink } from '../../../functions/helperFunctions';
+import { ENTITY_ROUTES } from '../../../router/routes';
+import PerPageComponent from '../../../components/common/PerPageComponent';
+import PaginateComponent from '../../../components/common/PaginateComponent';
+import ModalComponent from '../../../components/common/ModalComponent';
 
-export const RoleListPage = () => {
+const UserListPage = () => {
     const [ page, setPage ] = useState<number>(1);
     const [ perPage, setPerPage ] = useState<number | string>(5);
-    const [ nameFilter, setNameFilter ] = useState<string>('');
+    const [ emailFilter, setEmailFilter ] = useState<string>('');
     const [search, setSearch] = useState('');
 
     const dispatch = useAppDispatch();
 
-    const [ deleteRole, setDeleteRole ] = useState<IRoleItem | null>(null);
+    const [ deleteUser, setDeleteUser ] = useState<IUserItem | null>(null);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
     const [sortField, setSortField] = useState<'name' | 'slug' | 'id'>('id');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
-    const { data, isFetching }: { data: IApiAppResponse<IRoleResponseData>, isFetching: boolean } = useGetRolesQuery(
-        { page, per_page: perPage, name: nameFilter, sort_field: sortField, sort_direction: sortDirection }
+    const { data, isFetching }: { data: IApiAppResponse<IUserResponseData>, isFetching: boolean } = useGetUsersQuery(
+        { page, per_page: perPage, email: emailFilter, sort_field: sortField, sort_direction: sortDirection }
     );
 
     useEffect(() => {
@@ -35,10 +36,10 @@ export const RoleListPage = () => {
             const value = search.trim();
 
             if (value.length >= 3) {
-                setNameFilter(value);
+                setEmailFilter(value);
                 setPage(1);
             } else if (value.length === 0) {
-                setNameFilter('');
+                setEmailFilter('');
                 setPage(1);
             }
 
@@ -48,23 +49,23 @@ export const RoleListPage = () => {
     }, [search]);
 
     const deleteHandle = (idRole: number) => {
-        const role: IRoleItem | undefined = data.data.roles.find((item: IRoleItem) => item.id === idRole);
+        const user: IUserItem | undefined = data.data.users.find((item: IUserItem) => item.id === idRole);
 
-        if(role !== undefined) {
-            setDeleteRole(role);
+        if(user !== undefined) {
+            setDeleteUser(user);
             setShowDeleteModal(true);
         }
     };
 
-    const [deleteRoleMutation, { isLoading }] = useDeleteRoleMutation();
+    const [deleteUserMutation, { isLoading }] = useDeleteUserMutation();
 
-    const deleteRoleHandle = async (id: number) => {
+    const deleteUserHandle = async (id: number) => {
         setShowDeleteModal(false);
-        const res: IApiAppResponse<[]> = await deleteRoleMutation(id).unwrap();
+        const res: IApiAppResponse<[]> = await deleteUserMutation(id).unwrap();
 
-        if(res.data !== undefined && res.data !== null && deleteRole !== null) {
+        if(res.data !== undefined && res.data !== null && deleteUser !== null) {
             dispatch(showAlert({
-                text: `Role "${deleteRole.name}" was deleted`,
+                text: `User "${deleteUser.name}" was deleted`,
                 type: 'success'
             }));
 
@@ -92,24 +93,24 @@ export const RoleListPage = () => {
             )}
 
             <div className='flex items-center justify-between mb-6'>
-                <h2 className='text-3xl font-bold'>Roles List</h2>
-                <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/create`) }>+ Create Role</ButtonComponent>
+                <h2 className='text-3xl font-bold'>Users List</h2>
+                <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.USERS}/create`) }>+ Create User</ButtonComponent>
             </div>
 
             <div className='flex justify-between mb-5'>
                 <div className='relative flex-1 max-w-md'>
                     <input
                         type='text'
-                        placeholder='Search by name...'
+                        placeholder='Search by email...'
                         onChange={e => setSearch(e.target.value)}
                         className='w-full h-[42px] px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-400 outline-none transition focus:border-indigo-400/50 hover:bg-white/10'
                     />
                     <svg className='absolute right-3 top-1/2 mt-[-15px] text-slate-400'
-                        width='18'
-                        height='18'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
+                         width='18'
+                         height='18'
+                         fill='none'
+                         stroke='currentColor'
+                         viewBox='0 0 24 24'
                     >
                         <path
                             strokeLinecap='round'
@@ -176,7 +177,7 @@ export const RoleListPage = () => {
                                 setPage(1);
                             }}
                         >
-                            Slug
+                            Email
                             {sortField === 'slug' && (
                                 <span className="ml-1 text-xs text-indigo-400">
                                     {sortDirection === 'asc' ? '↑' : '↓'}
@@ -188,8 +189,8 @@ export const RoleListPage = () => {
                     </thead>
 
                     <tbody>
-                    {data && data.data !== undefined && data.data.roles !== undefined &&
-                        data.data.roles.map((item: IRoleItem) => (
+                    {data && data.data !== undefined && data.data.users !== undefined &&
+                        data.data.users.map((item: IUserItem) => (
                                 <tr
                                     key={item.id}
                                     className='border-t border-white/10 hover:bg-white/5 transition'
@@ -203,13 +204,13 @@ export const RoleListPage = () => {
                                     </td>
 
                                     <td className='p-4 text-slate-300'>
-                                        {item.slug}
+                                        {item.email}
                                     </td>
 
                                     <td className='p-4 text-right space-x-2'>
-                                        { item.slug !== 'super_admin' &&
+                                        { item.email !== 'super_admin' &&
                                             <>
-                                                <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ROLES}/edit/${item.id}`) }>Edit</ButtonComponent>
+                                                <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.USERS}/edit/${item.id}`) }>Edit</ButtonComponent>
                                                 <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>
                                             </>
                                         }
@@ -221,16 +222,17 @@ export const RoleListPage = () => {
                     </tbody>
                 </table>
             </div>
+
             {data && data.data !== undefined && data.data.paginate !== undefined && data.data.paginate.total > Number(perPage) &&
                 <PaginateComponent paginate={ data.data.paginate } paginateHandle={ setPage } />
             }
 
             <ModalComponent isShow={showDeleteModal} >
-                {deleteRole !== null && (
+                {deleteUser !== null && (
                     <>
-                        <p>Delete Role "{ deleteRole.name }"</p>
+                        <p>Delete User "{ deleteUser.name } - { deleteUser.email }"</p>
                         <div className="flex justify-end mt-6 space-x-3">
-                        <ButtonComponent type={ 'error' } onClick={ () => deleteRoleHandle(deleteRole.id) }>Delete</ButtonComponent>
+                            <ButtonComponent type={ 'error' } onClick={ () => deleteUserHandle(deleteUser.id) }>Delete</ButtonComponent>
                             <ButtonComponent onClick={ () => setShowDeleteModal(false) } type={ 'info' }>Close</ButtonComponent>
                         </div>
                     </>
@@ -240,4 +242,4 @@ export const RoleListPage = () => {
     );
 };
 
-export default RoleListPage;
+export default UserListPage;

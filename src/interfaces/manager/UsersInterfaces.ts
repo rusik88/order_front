@@ -1,25 +1,26 @@
 import type { IPaginateData } from '../common/PaginateInterfaces.ts';
 
-export interface IRoleGetAllQuery {
+export interface IUserGetAllQuery {
     page: number,
     per_page: number | string,
-    name: string,
+    email: string,
     sort_field: string,
     sort_direction: string
 }
 
-export interface IRoleItem {
+export interface IUserItem {
     id: number,
+    role_id: number,
     name: string,
-    slug: string,
-    permissions: string,
+    email: string,
+    email_verified_at: null | string,
     created_at: string,
     updated_at: string
 }
 
-export interface IRoleResponseData {
+export interface IUserResponseData {
     paginate: IPaginateData,
-    roles: IRoleItem[]
+    users: IUserItem[]
 }
 
 export interface IEntity {
@@ -27,7 +28,7 @@ export interface IEntity {
     slug: string
 }
 
-export interface IRoleData {
-    role: IRoleItem
+export interface IUserData {
+    user: IUserItem
 }
 
