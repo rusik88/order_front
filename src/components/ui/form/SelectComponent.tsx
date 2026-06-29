@@ -3,6 +3,7 @@ import type { ISelectOption, ISelectProps } from '../../../interfaces/ui/Element
 import clsx from 'clsx';
 
 const SelectComponent = ({ options, classNames, changeHandle }: ISelectProps) => {
+    if(options === undefined) return <></>;
     const selected_item: ISelectOption = options.find((item: ISelectOption) => item.selected)!;
 
     return (

@@ -1,4 +1,5 @@
 import type { IPaginateData } from '../common/PaginateInterfaces.ts';
+import type {IRoleItem} from "./RolesInterfaces.ts";
 
 export interface IUserGetAllQuery {
     page: number,
@@ -16,6 +17,7 @@ export interface IUserItem {
     email_verified_at: null | string,
     created_at: string,
     updated_at: string
+    role?: IRoleItem
 }
 
 export interface IUserResponseData {

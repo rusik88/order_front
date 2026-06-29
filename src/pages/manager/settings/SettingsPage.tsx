@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useMemo, useState } from 'react';
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import { useAppDispatch } from '../../../store/hooks';
+import clsx from "clsx";
 
 const SettingsPage = () => {
     const dispatch = useAppDispatch();
@@ -120,7 +121,7 @@ const SettingsPage = () => {
 
     return (
         <>
-            {isFetching || isLoading && <LoaderComponent />}
+            {(isFetching || isLoading) && <LoaderComponent />}
 
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold">
@@ -131,10 +132,13 @@ const SettingsPage = () => {
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div className="rounded-2xl border border-white/10">
                     {settings &&
-                        settings.map((setting: ISettingItem) => {
+                        settings.map((setting: ISettingItem, key: number) => {
                             return (
                                 <div className="w-full" key={ setting.key }>
-                                    <div className="flex items-center justify-between w-full border-t border-white/10">
+                                    <div className={clsx(
+                                        {"border-t": key !== 0},
+                                        "flex items-center justify-between w-full border-white/10"
+                                    )}>
                                         <div className="w-[30%] p-4 text-slate-300">
                                             { setting.title }
                                         </div>
