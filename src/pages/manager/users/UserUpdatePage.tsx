@@ -56,6 +56,9 @@ const UserUpdatePage = () => {
             reset({
                 name: user.name,
                 email: user.email,
+                role_id: user.role_id,
+                password: '',
+                password_confirmation: '',
             });
         }
     }, [data, reset]);
