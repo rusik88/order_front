@@ -8,6 +8,10 @@ export interface SettingsProps extends ISettingsData {
     settings: ISettingItem[]
 }
 
+export interface ISettingData {
+    setting: ISettingItem
+}
+
 export interface ISettingItemValueOption {
     id: number;
     name: string;

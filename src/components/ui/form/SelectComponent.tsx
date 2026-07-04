@@ -2,15 +2,16 @@ import Select, { type SingleValue } from 'react-select';
 import type { ISelectOption, ISelectProps } from '../../../interfaces/ui/ElementsInterface';
 import clsx from 'clsx';
 
-const SelectComponent = ({ options, classNames, changeHandle }: ISelectProps) => {
+const SelectComponent = ({ options, classNames, value, changeHandle }: ISelectProps) => {
     if(options === undefined) return <></>;
-    const selected_item: ISelectOption = options.find((item: ISelectOption) => item.selected)!;
+    //const selected_item: ISelectOption = options.find((item: ISelectOption) => item.selected)!;
+    const selectedItem: ISelectOption = options.find(item => item.value == value)!;
 
     return (
         <Select
             options={options}
-            defaultValue={selected_item}
             className={clsx(classNames)}
+            value = { selectedItem }
             unstyled
             onChange={(selectedOption: SingleValue<ISelectOption>) => {
                 if (!selectedOption) {
@@ -32,9 +33,17 @@ const SelectComponent = ({ options, classNames, changeHandle }: ISelectProps) =>
                     'text-slate-400 hover:text-white transition',
                 menu: () => 'mt-2 overflow-hidden rounded-xl border border-white/10 bg-slate-900 shadow-xl',
                 menuList: () => 'p-0',
-                option: ({ isFocused, isSelected }) =>
-                    `px-3 py-2 cursor-pointer transition
-                        ${ isSelected ? 'bg-indigo-500/20 text-indigo-300' : isFocused ? 'bg-white/10 text-white' : 'text-white' } `,
+                option: ({ isFocused, isSelected, isDisabled }) =>
+                    clsx(
+                        'px-3 py-2 transition',
+                        {
+                            'cursor-pointer': !isDisabled,
+                            'cursor-not-allowed opacity-50 text-slate-500': isDisabled,
+                            'bg-indigo-500/20 text-indigo-300': isSelected && !isDisabled,
+                            'bg-white/10 text-white': isFocused && !isDisabled,
+                            'text-white': !isFocused && !isSelected && !isDisabled,
+                        }
+                    ),
             }}
         />
     );

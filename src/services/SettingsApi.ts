@@ -17,6 +17,14 @@ export const SettingsApi = createApi({
             providesTags: ['Settings'],
         }),
 
+        getSetting: builder.query({
+            query: (slug: string) => ({
+                url: `${API_APP.SETTINGS}/${slug}`,
+                method: 'GET'
+            }),
+            providesTags: ['Settings'],
+        }),
+
         updateSettings: builder.mutation({
             query: ({ ...data }) => ({
                 url: API_APP.SETTINGS,
@@ -31,5 +39,6 @@ export const SettingsApi = createApi({
 
 export const {
     useGetSettingsQuery,
+    useGetSettingQuery,
     useUpdateSettingsMutation
 } = SettingsApi;

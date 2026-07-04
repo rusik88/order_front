@@ -18,11 +18,12 @@ export interface InputComponentProps extends InputHTMLAttributes<HTMLInputElemen
 export interface ISelectProps {
     options: ISelectOption[];
     classNames?: string;
+    value: string | number,
     changeHandle: (value: string | number) => void;
 }
 
 export interface ISelectOption {
     value: number | string,
     label: string,
-    selected: boolean
+    isDisabled: boolean
 }

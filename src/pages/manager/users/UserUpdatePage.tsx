@@ -69,7 +69,7 @@ const UserUpdatePage = () => {
         return data_roles?.data?.roles.map(role => ({
             label: role.name,
             value: role.id,
-            selected: role.id === user.role_id,
+            isDisabled: role.slug === 'super_admin'
         }));
     }, [data_roles, user]);
 
@@ -128,8 +128,8 @@ const UserUpdatePage = () => {
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-slate-300 mb-2">Title</label>
-                        <InputComponent type="text" placeholder="Manager" {...register('name')} />
+                        <label className="block text-slate-300 mb-2">Name</label>
+                        <InputComponent type="text" placeholder="User" {...register('name')} />
                         {errors.name && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.name.message}
@@ -138,8 +138,8 @@ const UserUpdatePage = () => {
                     </div>
 
                     <div>
-                        <label className="block text-slate-300 mb-2">Slug</label>
-                        <InputComponent type="text" placeholder="manager" {...register('email')} />
+                        <label className="block text-slate-300 mb-2">Email</label>
+                        <InputComponent type="text" placeholder="test@test.com" {...register('email')} />
                         {errors.email && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.email.message}
@@ -156,6 +156,7 @@ const UserUpdatePage = () => {
                                 render={({ field }) => (
                                     <SelectComponent
                                         options={roleOptions}
+                                        value={field.value}
                                         changeHandle={field.onChange}
                                     />
                                 )}
@@ -166,7 +167,7 @@ const UserUpdatePage = () => {
 
                     <div>
                         <label className="block text-slate-300 mb-2">Password</label>
-                        <InputComponent type="text" placeholder="Password" {...register('password')} />
+                        <InputComponent type="password" placeholder="Password" {...register('password')} />
                         {errors.password && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.password.message}
@@ -176,7 +177,7 @@ const UserUpdatePage = () => {
 
                     <div>
                         <label className="block text-slate-300 mb-2">Password confirmation</label>
-                        <InputComponent type="text" placeholder="Password confirmation" {...register('password_confirmation')} />
+                        <InputComponent type="password" placeholder="Password confirmation" {...register('password_confirmation')} />
                         {errors.password_confirmation && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.password_confirmation.message}

@@ -16,8 +16,9 @@ import RoleUpdatePage from '../pages/manager/roles/RoleUpdatePage';
 import OrderListPage from '../pages/manager/orders/OrderListPage';
 import OrderCreatePage from '../pages/manager/orders/OrderCreatePage';
 import SettingsPage from '../pages/manager/settings/SettingsPage';
-import UserListPage from '../pages/manager/users/UserListPage.tsx';
-import UserUpdatePage from "../pages/manager/users/UserUpdatePage.tsx";
+import UserListPage from '../pages/manager/users/UserListPage';
+import UserUpdatePage from '../pages/manager/users/UserUpdatePage';
+import UserCreatePage from '../pages/manager/users/UserCreatePage';
 
 export const router = createBrowserRouter([
     {
@@ -74,10 +75,10 @@ export const router = createBrowserRouter([
                         index: true,
                         element: <UserListPage />
                     },
-                    /*{
+                    {
                         path: 'create',
-                        element: <RoleCreatePage />
-                    },*/
+                        element: <UserCreatePage />
+                    },
                     {
                         path: 'edit/:id',
                         element: <UserUpdatePage />
