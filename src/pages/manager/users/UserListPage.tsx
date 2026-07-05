@@ -6,7 +6,7 @@ import { useDeleteUserMutation, useGetUsersQuery } from '../../../services/Users
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
-import { fullLink } from '../../../functions/helperFunctions';
+import { formatDateTime, fullLink } from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
 import PerPageComponent from '../../../components/common/PerPageComponent';
 import PaginateComponent from '../../../components/common/PaginateComponent';
@@ -23,7 +23,7 @@ const UserListPage = () => {
     const [ deleteUser, setDeleteUser ] = useState<IUserItem | null>(null);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
-    const [sortField, setSortField] = useState<'name' | 'slug' | 'id'>('id');
+    const [sortField, setSortField] = useState<'name' | 'email' | 'id' | 'created_at' | 'role_name'>('id');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     const { data, isFetching }: { data: IApiAppResponse<IUserResponseData>, isFetching: boolean } = useGetUsersQuery(
@@ -167,17 +167,55 @@ const UserListPage = () => {
                         <th
                             className="p-4 cursor-pointer select-none"
                             onClick={() => {
-                                if (sortField === 'slug') {
+                                if (sortField === 'email') {
                                     setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
                                 } else {
-                                    setSortField('slug');
+                                    setSortField('email');
                                     setSortDirection('asc');
                                 }
                                 setPage(1);
                             }}
                         >
                             Email
-                            {sortField === 'slug' && (
+                            {sortField === 'email' && (
+                                <span className="ml-1 text-xs text-indigo-400">
+                                    {sortDirection === 'asc' ? '↑' : '↓'}
+                                </span>
+                            )}
+                        </th>
+                        <th
+                            className="p-4 cursor-pointer select-none"
+                            onClick={() => {
+                                if (sortField === 'role_name') {
+                                    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+                                } else {
+                                    setSortField('role_name');
+                                    setSortDirection('asc');
+                                }
+                                setPage(1);
+                            }}
+                        >
+                            Role
+                            {sortField === 'role_name' && (
+                                <span className="ml-1 text-xs text-indigo-400">
+                                    {sortDirection === 'asc' ? '↑' : '↓'}
+                                </span>
+                            )}
+                        </th>
+                        <th
+                            className="p-4 cursor-pointer select-none"
+                            onClick={() => {
+                                if (sortField === 'created_at') {
+                                    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+                                } else {
+                                    setSortField('created_at');
+                                    setSortDirection('asc');
+                                }
+                                setPage(1);
+                            }}
+                        >
+                            Created
+                            {sortField === 'created_at' && (
                                 <span className="ml-1 text-xs text-indigo-400">
                                     {sortDirection === 'asc' ? '↑' : '↓'}
                                 </span>
@@ -204,6 +242,14 @@ const UserListPage = () => {
 
                                     <td className='p-4 text-slate-300'>
                                         {item.email}
+                                    </td>
+
+                                    <td className='p-4 text-slate-300'>
+                                        {item.role?.name}
+                                    </td>
+
+                                    <td className='p-4 text-slate-300'>
+                                        {formatDateTime(item.created_at)}
                                     </td>
 
                                     <td className='p-4 text-right space-x-2'>

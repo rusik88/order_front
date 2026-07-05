@@ -7,7 +7,7 @@ import type { IApiAppResponse } from '../../../interfaces/common/ApiAppInterface
 import type { IRoleItem, IRoleResponseData } from '../../../interfaces/manager/RolesInterfaces';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import PerPageComponent from '../../../components/common/PerPageComponent';
-import { fullLink } from '../../../functions/helperFunctions';
+import { formatDateTime, fullLink } from '../../../functions/helperFunctions';
 import ModalComponent from '../../../components/common/ModalComponent';
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import { useAppDispatch } from '../../../store/hooks';
@@ -23,7 +23,7 @@ export const RoleListPage = () => {
     const [ deleteRole, setDeleteRole ] = useState<IRoleItem | null>(null);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
-    const [sortField, setSortField] = useState<'name' | 'slug' | 'id'>('id');
+    const [sortField, setSortField] = useState<'name' | 'slug' | 'id' | 'created_at'>('id');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     const { data, isFetching }: { data: IApiAppResponse<IRoleResponseData>, isFetching: boolean } = useGetRolesQuery(
@@ -183,6 +183,25 @@ export const RoleListPage = () => {
                                 </span>
                             )}
                         </th>
+                        <th
+                            className="p-4 cursor-pointer select-none"
+                            onClick={() => {
+                                if (sortField === 'created_at') {
+                                    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+                                } else {
+                                    setSortField('created_at');
+                                    setSortDirection('asc');
+                                }
+                                setPage(1);
+                            }}
+                        >
+                            Created
+                            {sortField === 'created_at' && (
+                                <span className="ml-1 text-xs text-indigo-400">
+                                    {sortDirection === 'asc' ? '↑' : '↓'}
+                                </span>
+                            )}
+                        </th>
                         <th className='p-4 text-right'>Actions</th>
                     </tr>
                     </thead>
@@ -204,6 +223,10 @@ export const RoleListPage = () => {
 
                                     <td className='p-4 text-slate-300'>
                                         {item.slug}
+                                    </td>
+
+                                    <td className='p-4 text-slate-300'>
+                                        {formatDateTime(item.created_at)}
                                     </td>
 
                                     <td className='p-4 text-right space-x-2'>

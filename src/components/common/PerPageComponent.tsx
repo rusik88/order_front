@@ -1,6 +1,6 @@
 import type { IPerPageProps } from '../../interfaces/common/PerPageInterfaces';
 import SelectComponent from '../ui/form/SelectComponent';
-import type { ISelectOption } from '../../interfaces/ui/ElementsInterface.ts';
+import type { ISelectOption } from '../../interfaces/ui/ElementsInterface';
 
 const options: ISelectOption[] = [
     { value: 5, label: '5', isDisabled: false },
@@ -11,12 +11,11 @@ const options: ISelectOption[] = [
     { value: 100, label: '100', isDisabled: false },
 ];
 
-const defaultValue = 5;
+const PerPageComponent = ({ initPage, changeHandle, classNames }: IPerPageProps) => {
 
-const PerPageComponent = ({ changeHandle, classNames }: IPerPageProps) => {
     return (
         <>
-            <SelectComponent options={ options } value={ defaultValue }  changeHandle={ changeHandle } classNames={ classNames } />
+            <SelectComponent options={ options } value={ initPage }  changeHandle={ changeHandle } classNames={ classNames } />
         </>
     );
 };
