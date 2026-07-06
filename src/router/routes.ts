@@ -7,7 +7,8 @@ export const ENTITY_ROUTES = {
     ROLES: 'roles',
     USERS: 'users',
     ORDERS: 'orders',
-    SETTINGS: 'settings'
+    SETTINGS: 'settings',
+    ORDER_STATUSES: 'order_statuses'
 } as const;
 
 export const API_APP = {
@@ -19,6 +20,7 @@ export const API_APP = {
     ROLES: '/roles',
     ORDERS: '/orders',
     USERS: '/users',
+    ORDER_STATUSES: '/order_statuses',
 
     SETTINGS: '/settings'
 

@@ -2,7 +2,7 @@ import { InputComponent } from '../../../components/ui/form/InputComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 import { fullLink }  from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
-import type { IEntity, IRoleData } from '../../../interfaces/manager/RolesInterfaces';
+import type { IRoleData } from '../../../interfaces/manager/RolesInterfaces';
 import { useForm } from 'react-hook-form';
 import { type RoleFormData, roleFormSchema } from '../../../schemas/RolesSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,6 +14,7 @@ import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import { entities_data } from '../../../utils/roles';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import type { IEntity } from '../../../interfaces/common/CommonInterfacecs.ts';
 
 
 export const RoleUpdatePage = () => {

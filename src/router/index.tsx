@@ -19,6 +19,9 @@ import SettingsPage from '../pages/manager/settings/SettingsPage';
 import UserListPage from '../pages/manager/users/UserListPage';
 import UserUpdatePage from '../pages/manager/users/UserUpdatePage';
 import UserCreatePage from '../pages/manager/users/UserCreatePage';
+import OrderStatusesListPage from "../pages/manager/orderStatuses/OrderStatusesListPage.tsx";
+import OrderStatusesCreatePage from "../pages/manager/orderStatuses/OrderStatusesCreatePage.tsx";
+import OrderStatusesUpdatePage from "../pages/manager/orderStatuses/OrderStatusesUpdatePage.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -82,6 +85,23 @@ export const router = createBrowserRouter([
                     {
                         path: 'edit/:id',
                         element: <UserUpdatePage />
+                    }
+                ]
+            },
+            {
+                path: ENTITY_ROUTES.ORDER_STATUSES,
+                children: [
+                    {
+                        index: true,
+                        element: <OrderStatusesListPage />
+                    },
+                    {
+                        path: 'create',
+                        element: <OrderStatusesCreatePage />
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: <OrderStatusesUpdatePage />
                     }
                 ]
             },

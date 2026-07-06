@@ -2,7 +2,7 @@ import { InputComponent } from '../../../components/ui/form/InputComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 import { fullLink }  from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
-import type { IEntity, IRoleData } from '../../../interfaces/manager/RolesInterfaces';
+import type { IRoleData } from '../../../interfaces/manager/RolesInterfaces';
 import { useForm } from 'react-hook-form';
 import { type RoleFormData, roleFormSchema } from '../../../schemas/RolesSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +11,7 @@ import { useCreateRoleMutation } from '../../../services/RolesApi.ts';
 import type { IApiAppResponse, IApiErrorData } from '../../../interfaces/common/ApiAppInterfaces';
 import { useAppDispatch } from '../../../store/hooks.ts';
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
+import type { IEntity } from '../../../interfaces/common/CommonInterfacecs.ts';
 
 const entities: IEntity[] = [
     { title: 'Orders', slug: 'order' },
@@ -159,7 +160,7 @@ export const RoleCreatePage = () => {
 
                 <div className="flex justify-end gap-3 pt-4">
                     <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ROLES}`) }>Cancel</ButtonComponent>
-                    <ButtonComponent type={ 'inverse_info' } isDisabled={ isSubmitting && isLoading }>Create Order</ButtonComponent>
+                    <ButtonComponent type={ 'inverse_info' } isDisabled={ isSubmitting && isLoading }>Create Role</ButtonComponent>
                 </div>
             </form>
         </>

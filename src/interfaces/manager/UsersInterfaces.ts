@@ -25,11 +25,6 @@ export interface IUserResponseData {
     users: IUserItem[]
 }
 
-export interface IEntity {
-    title: string,
-    slug: string
-}
-
 export interface IUserData {
     user: IUserItem
 }

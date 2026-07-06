@@ -7,6 +7,8 @@ const SelectComponent = ({ options, classNames, value, changeHandle }: ISelectPr
     //const selected_item: ISelectOption = options.find((item: ISelectOption) => item.selected)!;
     const selectedItem: ISelectOption = options.find(item => item.value == value)!;
 
+    console.log("selectedItem", selectedItem, value);
+
     return (
         <Select
             options={options}

@@ -4,25 +4,26 @@ import { useGetSettingsQuery, useUpdateSettingsMutation } from '../../../service
 import type {
     ISettingItem,
     ISettingItemValueOption,
-    ISettingsData, settingValueType
+    ISettingsData,
+    settingValueType
 } from '../../../interfaces/manager/SettingsInterfaces.ts';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import { InputComponent } from '../../../components/ui/form/InputComponent.tsx';
 import SelectComponent from '../../../components/ui/form/SelectComponent.tsx';
-import { useForm } from 'react-hook-form';
-import { useEffect, useMemo, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useEffect, useMemo } from 'react';
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import { useAppDispatch } from '../../../store/hooks';
-import clsx from "clsx";
+import clsx from 'clsx';
+import type { ISelectOption } from '../../../interfaces/ui/ElementsInterface.ts';
 
 const SettingsPage = () => {
     const dispatch = useAppDispatch();
 
-    const { register, reset, handleSubmit } = useForm();
-    const [ roleId, setRoleId ] = useState<number | string>('');
+    const { register, reset, control, handleSubmit } = useForm();
 
     const { data, isFetching }: { data: IApiAppResponse<ISettingsData>, isFetching: boolean } = useGetSettingsQuery(undefined);
-    const [updateSettings, { isLoading }] = useUpdateSettingsMutation();
+    const [updateSettings, { isLoading: isLoadingSettings }] = useUpdateSettingsMutation();
 
     const settings: ISettingItem[] = data?.data?.settings;
 
@@ -31,25 +32,42 @@ const SettingsPage = () => {
 
         const values: Record<string, settingValueType> = {};
 
-        settings.forEach((setting: ISettingItem) => {
-            values[setting.key] = setting.value;
+        settings.forEach(setting => {
+            if (setting.key === 'default_role') {
+                const roles = setting.value as ISettingItemValueOption[];
+
+                values.default_role =
+                    roles.find(role => role.selected)?.id ?? '';
+            } else {
+                values[setting.key] = setting.value;
+            }
         });
 
         reset(values);
     }, [settings, reset]);
 
-    const roleOptions = useMemo(() => {
+    const roleOptions: { options: ISelectOption[], default: string | number } = useMemo(() => {
         const roleSetting = settings?.find(
             item => item.key === 'default_role'
         );
 
-        if (!roleSetting) return [];
+        const dataRolesOptions: { options: ISelectOption[], default: string | number } = {
+            options: [],
+            default: 0
+        };
 
-        return (roleSetting.value as ISettingItemValueOption[]).map(role => ({
-            label: role.name,
-            value: role.id,
-            selected: role.selected,
-        }));
+        if (!roleSetting) return dataRolesOptions;
+
+        dataRolesOptions.options = (roleSetting.value as ISettingItemValueOption[]).map((role: ISettingItemValueOption): ISelectOption => {
+            if(role.selected) dataRolesOptions.default = role.id;
+            return {
+                label: role.name,
+                value: role.id,
+                isDisabled: false,
+            };
+        });
+
+        return dataRolesOptions;
     }, [settings]);
 
     const onSubmit = async (
@@ -64,10 +82,7 @@ const SettingsPage = () => {
                 let value: string | number;
 
                 if(setting.key === 'default_role') {
-                    const role_values: ISettingItemValueOption[] = settings.find((setting: ISettingItem) => setting.key === 'default_role')!.value as ISettingItemValueOption[];
-                    const default_role_id: number = role_values.find((role_value: ISettingItemValueOption) => role_value.selected)!.id;
-
-                    value = roleId ? roleId : default_role_id;
+                    value = data[setting.key] as number;
                 } else {
                     value = data[setting.key] as string;
                 }
@@ -121,7 +136,7 @@ const SettingsPage = () => {
 
     return (
         <>
-            {(isFetching || isLoading) && <LoaderComponent />}
+            {(isFetching || isLoadingSettings) && <LoaderComponent />}
 
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold">
@@ -136,8 +151,8 @@ const SettingsPage = () => {
                             return (
                                 <div className="w-full" key={ setting.key }>
                                     <div className={clsx(
-                                        {"border-t": key !== 0},
-                                        "flex items-center justify-between w-full border-white/10"
+                                        { 'border-t': key !== 0 },
+                                        'flex items-center justify-between w-full border-white/10'
                                     )}>
                                         <div className="w-[30%] p-4 text-slate-300">
                                             { setting.title }
@@ -155,8 +170,21 @@ const SettingsPage = () => {
                                                     {...register(setting.key)} />
                                             }
                                             {setting.type === 'role' &&
-                                                <SelectComponent {...register(setting.key)} options={ roleOptions } changeHandle={ setRoleId } />
+                                                <>
+                                                    <Controller
+                                                        name="default_role"
+                                                        control={control}
+                                                        render={({ field }) => (
+                                                            <SelectComponent
+                                                                options={roleOptions.options}
+                                                                value={field.value}
+                                                                changeHandle={field.onChange}
+                                                            />
+                                                        )}
+                                                    />
+                                                </>
                                             }
+
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +194,7 @@ const SettingsPage = () => {
                 </div>
 
                 <div className="flex justify-end gap-3 pt-4">
-                    <ButtonComponent type={'inverse_info'} isDisabled={ isLoading }>Save Settings</ButtonComponent>
+                    <ButtonComponent type={'inverse_info'} isDisabled={ isLoadingSettings }>Save Settings</ButtonComponent>
                 </div>
 
             </form>

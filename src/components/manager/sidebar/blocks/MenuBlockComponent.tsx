@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { fullLink } from '../../../../functions/helperFunctions.ts';
-import { ENTITY_ROUTES } from '../../../../router/routes.ts';
+import { fullLink } from '../../../../functions/helperFunctions';
+import { ENTITY_ROUTES } from '../../../../router/routes';
 
 const MenuBlockComponent = () => {
     return (
@@ -12,7 +12,7 @@ const MenuBlockComponent = () => {
             </div>
             <div>
                 <div className="mb-3 text-lg font-semibold">
-                    <Link to={ fullLink(ENTITY_ROUTES.ORDERS) }>Order Statuses</Link>
+                    <Link to={ fullLink(ENTITY_ROUTES.ORDER_STATUSES) }>Order Statuses</Link>
                 </div>
             </div>
             <div>

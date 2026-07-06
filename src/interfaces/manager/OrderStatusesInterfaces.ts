@@ -1,6 +1,6 @@
 import type { IPaginateData } from '../common/PaginateInterfaces.ts';
 
-export interface IRoleGetAllQuery {
+export interface IOrderStatusGetAllQuery {
     page: number,
     per_page: number | string,
     name: string,
@@ -8,21 +8,20 @@ export interface IRoleGetAllQuery {
     sort_direction: string
 }
 
-export interface IRoleItem {
+export interface IOrderStatusItem {
     id: number,
     name: string,
     slug: string,
-    permissions: string,
     created_at: string,
     updated_at: string
 }
 
-export interface IRoleResponseData {
+export interface IOrderStatusResponseData {
     paginate: IPaginateData,
-    roles: IRoleItem[]
+    order_statuses: IOrderStatusItem[]
 }
 
-export interface IRoleData {
-    role: IRoleItem
+export interface IOrderStatusData {
+    order_status: IOrderStatusItem
 }
 
