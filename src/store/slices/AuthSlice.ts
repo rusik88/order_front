@@ -5,7 +5,8 @@ import type { IApiUser } from '../../interfaces/auth/AuthApiInterfaces';
 const initialState: AuthStateInterface = {
     auth_token: null,
     user: null,
-    user_role: null
+    user_role: null,
+    user_permissions: []
 };
 
 const authSlice = createSlice({
@@ -16,12 +17,14 @@ const authSlice = createSlice({
             state.auth_token = action.payload.auth_token;
             state.user = action.payload.user;
             state.user_role = action.payload.user.role.slug;
+            state.user_permissions = JSON.parse(action.payload.user.role.permissions);
             localStorage.setItem('auth_token', action.payload.auth_token);
         },
 
         setUser: (state, action: {payload: IApiUser}) => {
             state.user = action.payload;
             state.user_role = action.payload.role.slug;
+            state.user_permissions = JSON.parse(action.payload.role.permissions);
         },
 
         removeToken: state => {

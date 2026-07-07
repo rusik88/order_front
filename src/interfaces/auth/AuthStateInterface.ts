@@ -3,7 +3,8 @@ import type { IApiUser } from './AuthApiInterfaces.ts';
 export interface AuthStateInterface {
     auth_token: string | null,
     user: IApiUser | null,
-    user_role: string | null
+    user_role: string | null,
+    user_permissions: string[]
 }
 
 export interface AuthPayloadLoginInterface {

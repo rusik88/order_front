@@ -23,6 +23,7 @@ import OrderStatusesListPage from "../pages/manager/orderStatuses/OrderStatusesL
 import OrderStatusesCreatePage from "../pages/manager/orderStatuses/OrderStatusesCreatePage.tsx";
 import OrderStatusesUpdatePage from "../pages/manager/orderStatuses/OrderStatusesUpdatePage.tsx";
 import RouterGuard from "../guards/RouterGuard.tsx";
+import RoleGuard from "../guards/RoleGuard.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -94,15 +95,15 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <OrderStatusesListPage />
+                        element: <RoleGuard roles={['order_status:read']} isRedirect={true}><OrderStatusesListPage /></RoleGuard>
                     },
                     {
                         path: 'create',
-                        element: <OrderStatusesCreatePage />
+                        element:  <RoleGuard roles={['order_status:create']} isRedirect={true}><OrderStatusesCreatePage /></RoleGuard>
                     },
                     {
                         path: 'edit/:id',
-                        element: <OrderStatusesUpdatePage />
+                        element: <RoleGuard roles={['order_status:update']} isRedirect={true}><OrderStatusesUpdatePage /></RoleGuard>
                     }
                 ]
             },

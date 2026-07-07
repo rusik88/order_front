@@ -11,6 +11,7 @@ import { ENTITY_ROUTES } from '../../../router/routes';
 import PerPageComponent from '../../../components/common/PerPageComponent';
 import PaginateComponent from '../../../components/common/PaginateComponent';
 import ModalComponent from '../../../components/common/ModalComponent';
+import RoleGuard from '../../../guards/RoleGuard';
 
 const OrderStatusesListPage = () => {
     const [ page, setPage ] = useState<number>(1);
@@ -91,10 +92,12 @@ const OrderStatusesListPage = () => {
                 <LoaderComponent />
             )}
 
-            <div className='flex items-center justify-between mb-6'>
-                <h2 className='text-3xl font-bold'>Order Statuses List</h2>
-                <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ORDER_STATUSES}/create`) }>+ Create Status</ButtonComponent>
-            </div>
+            <RoleGuard roles={['order_status:create']}>
+                <div className='flex items-center justify-between mb-6'>
+                    <h2 className='text-3xl font-bold'>Order Statuses List</h2>
+                    <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ORDER_STATUSES}/create`) }>+ Create Status</ButtonComponent>
+                </div>
+            </RoleGuard>
 
             <div className='flex justify-between mb-5'>
                 <div className='relative flex-1 max-w-md'>
@@ -232,8 +235,12 @@ const OrderStatusesListPage = () => {
                                     <td className='p-4 text-right space-x-2'>
                                         { item.slug !== 'super_admin' &&
                                             <>
-                                                <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ORDER_STATUSES}/edit/${item.id}`) }>Edit</ButtonComponent>
-                                                <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>
+                                                <RoleGuard roles={['order_status:update']}>
+                                                    <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ORDER_STATUSES}/edit/${item.id}`) }>Edit</ButtonComponent>
+                                                </RoleGuard>
+                                                <RoleGuard roles={['order_status:delete']}>
+                                                    <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>
+                                                </RoleGuard>
                                             </>
                                         }
                                     </td>
