@@ -12,12 +12,8 @@ import type { IApiAppResponse, IApiErrorData } from '../../../interfaces/common/
 import { useAppDispatch } from '../../../store/hooks.ts';
 import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import type { IEntity } from '../../../interfaces/common/CommonInterfacecs.ts';
+import { entities_data } from '../../../utils/roles';
 
-const entities: IEntity[] = [
-    { title: 'Orders', slug: 'order' },
-    { title: 'Order Statuses', slug: 'order_status' },
-    { title: 'Users', slug: 'users' },
-];
 export const RoleCreatePage = () => {
     const dispatch = useAppDispatch();
     
@@ -108,7 +104,7 @@ export const RoleCreatePage = () => {
                     </div>
                 </div>
 
-                { entities &&
+                { entities_data &&
                     (
                         <div className="rounded-2xl border border-white/10 overflow-hidden">
                             <table className="w-full">
@@ -123,7 +119,7 @@ export const RoleCreatePage = () => {
                                 </thead>
 
                                 <tbody>
-                                    { entities.map((item: IEntity)=> {
+                                    { entities_data.map((item: IEntity)=> {
                                         return (
                                             <tr className="border-t border-white/10" key={item.slug}>
                                                 <td className="p-4">{ item.title }</td>
