@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, type RegisterFormDataType } from '../../schemas/AuthSchema';
 import type { IApiAppResponse, IApiErrorData } from '../../interfaces/common/ApiAppInterfaces';
-import { setToken } from '../../store/slices/AuthSlice';
+import { setAuth } from '../../store/slices/AuthSlice';
 import { useRegistrationMutation } from '../../services/AuthApi';
 import { useAppDispatch } from '../../store/hooks';
 import { config_app } from '../../../config.ts';
@@ -37,7 +37,7 @@ const RegisterPage = () => {
                 (res.data !== undefined && res.data !== null) &&
                 (res.data.auth_token !== undefined && res.data.auth_token !== null)
             ) {
-                dispatch(setToken(res.data));
+                dispatch(setAuth(res.data));
                 navigate(`/${config_app.MANAGER_PANEL}`);
             } else {
                 throw {

@@ -22,10 +22,10 @@ const SettingsPage = () => {
 
     const { register, reset, control, handleSubmit } = useForm();
 
-    const { data, isFetching }: { data: IApiAppResponse<ISettingsData>, isFetching: boolean } = useGetSettingsQuery(undefined);
+    const { data: dataSettings, isFetching }: { data: IApiAppResponse<ISettingsData>, isFetching: boolean } = useGetSettingsQuery(undefined);
     const [updateSettings, { isLoading: isLoadingSettings }] = useUpdateSettingsMutation();
 
-    const settings: ISettingItem[] = data?.data?.settings;
+    const settings: ISettingItem[] = dataSettings?.data?.settings;
 
     useEffect(() => {
         if (!settings) return;

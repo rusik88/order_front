@@ -4,21 +4,24 @@ import type { IApiUser } from '../../interfaces/auth/AuthApiInterfaces';
 
 const initialState: AuthStateInterface = {
     auth_token: null,
-    user: null
+    user: null,
+    user_role: null
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setToken: (state, action: {payload: AuthPayloadLoginInterface}) => {
+        setAuth: (state, action: {payload: AuthPayloadLoginInterface}) => {
             state.auth_token = action.payload.auth_token;
             state.user = action.payload.user;
+            state.user_role = action.payload.user.role.slug;
             localStorage.setItem('auth_token', action.payload.auth_token);
         },
 
         setUser: (state, action: {payload: IApiUser}) => {
             state.user = action.payload;
+            state.user_role = action.payload.role.slug;
         },
 
         removeToken: state => {
@@ -37,5 +40,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setToken, removeToken, hydrateToken, setUser } = authSlice.actions;
+export const { setAuth, removeToken, hydrateToken, setUser } = authSlice.actions;
 export default authSlice.reducer;

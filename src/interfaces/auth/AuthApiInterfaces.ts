@@ -1,3 +1,5 @@
+import type { IRoleItem } from '../manager/RolesInterfaces.ts';
+
 export interface IApiLoginData {
     auth_token: string,
     user: IApiUser
@@ -9,7 +11,8 @@ export interface IApiUser {
     email: string,
     email_verified_at?: string | null,
     created_at?: string,
-    updated_at?: string
+    updated_at?: string,
+    role: IRoleItem
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

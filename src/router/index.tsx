@@ -22,6 +22,7 @@ import UserCreatePage from '../pages/manager/users/UserCreatePage';
 import OrderStatusesListPage from "../pages/manager/orderStatuses/OrderStatusesListPage.tsx";
 import OrderStatusesCreatePage from "../pages/manager/orderStatuses/OrderStatusesCreatePage.tsx";
 import OrderStatusesUpdatePage from "../pages/manager/orderStatuses/OrderStatusesUpdatePage.tsx";
+import RouterGuard from "../guards/RouterGuard.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -52,22 +53,22 @@ export const router = createBrowserRouter([
             },
             {
                 path: ENTITY_ROUTES.SETTINGS,
-                element: <SettingsPage />,
+                element: <RouterGuard roles={ ['super_admin'] }><SettingsPage /></RouterGuard>,
             },
             {
                 path: ENTITY_ROUTES.ROLES,
                 children: [
                     {
                         index: true,
-                        element: <RoleListPage />
+                        element: <RouterGuard roles={ ['super_admin', 'admin'] }><RoleListPage /></RouterGuard>
                     },
                     {
                         path: 'create',
-                        element: <RoleCreatePage />
+                        element: <RouterGuard roles={ ['super_admin', 'admin'] }><RoleCreatePage /></RouterGuard>
                     },
                     {
                         path: 'edit/:id',
-                        element: <RoleUpdatePage />
+                        element: <RouterGuard roles={ ['super_admin', 'admin'] }><RoleUpdatePage /></RouterGuard>
                     }
                 ]
             },
@@ -76,15 +77,15 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <UserListPage />
+                        element: <RouterGuard roles={ ['super_admin', 'admin'] }><UserListPage /></RouterGuard>
                     },
                     {
                         path: 'create',
-                        element: <UserCreatePage />
+                        element: <RouterGuard roles={ ['super_admin', 'admin'] }><UserCreatePage /></RouterGuard>
                     },
                     {
                         path: 'edit/:id',
-                        element: <UserUpdatePage />
+                        element: <RouterGuard roles={ ['super_admin', 'admin'] }><UserUpdatePage /></RouterGuard>
                     }
                 ]
             },

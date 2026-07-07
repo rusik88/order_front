@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormDataType } from '../../schemas/AuthSchema';
 import { useLoginMutation } from '../../services/AuthApi';
 import type { IApiLoginData } from '../../interfaces/auth/AuthApiInterfaces';
-import { setToken } from '../../store/slices/AuthSlice';
+import { setAuth } from '../../store/slices/AuthSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { config_app } from '../../../config';
 import type { IApiAppResponse, IApiErrorData } from '../../interfaces/common/ApiAppInterfaces';
@@ -38,7 +38,7 @@ const LoginPage = () => {
                 (res.data !== undefined && res.data !== null) &&
                 (res.data.auth_token !== undefined && res.data.auth_token !== null)
             ) {
-                dispatch(setToken(res.data));
+                dispatch(setAuth(res.data));
                 navigate(`/${config_app.MANAGER_PANEL}`);
             } else {
                throw {

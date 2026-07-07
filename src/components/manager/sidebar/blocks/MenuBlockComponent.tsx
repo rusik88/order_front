@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { fullLink } from '../../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../../router/routes';
+import UserGuard from '../../../../guards/UserGuard';
 
 const MenuBlockComponent = () => {
     return (
@@ -15,21 +16,27 @@ const MenuBlockComponent = () => {
                     <Link to={ fullLink(ENTITY_ROUTES.ORDER_STATUSES) }>Order Statuses</Link>
                 </div>
             </div>
-            <div>
-                <div className="mb-3 text-lg font-semibold">
-                    <Link to={ fullLink(ENTITY_ROUTES.USERS) }>Users</Link>
+            <UserGuard roles={ ['super_admin', 'admin'] }>
+                <div>
+                    <div className="mb-3 text-lg font-semibold">
+                        <Link to={ fullLink(ENTITY_ROUTES.USERS) }>Users</Link>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div className="mb-3 text-lg font-semibold">
-                    <Link to={ fullLink(ENTITY_ROUTES.ROLES) }>Roles</Link>
+            </UserGuard>
+            <UserGuard roles={ ['super_admin', 'admin'] }>
+                <div>
+                    <div className="mb-3 text-lg font-semibold">
+                        <Link to={ fullLink(ENTITY_ROUTES.ROLES) }>Roles</Link>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div className="mb-3 text-lg font-semibold">
-                    <Link to={ fullLink(ENTITY_ROUTES.SETTINGS) }>Settings</Link>
+            </UserGuard>
+            <UserGuard roles={ ['super_admin'] }>
+                <div>
+                    <div className="mb-3 text-lg font-semibold">
+                        <Link to={ fullLink(ENTITY_ROUTES.SETTINGS) }>Settings</Link>
+                    </div>
                 </div>
-            </div>
+            </UserGuard>
         </nav>
     );
 };

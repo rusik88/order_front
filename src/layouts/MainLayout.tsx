@@ -1,22 +1,29 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useMeQuery } from '../services/AuthApi';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { removeToken } from '../store/slices/AuthSlice';
+import {removeToken, setUser} from '../store/slices/AuthSlice';
 import HeaderComponent from '../components/manager/header/HeaderComponent';
 import FooterComponent from '../components/manager/footer/FooterComponent';
 import SidebarComponent from '../components/manager/sidebar/SidebarComponent';
 import { PUBLIC_ROUTES } from '../router/routes.ts';
 import AlertComponent from '../components/common/AlertComponent';
 import LoaderComponent from '../components/common/LoaderComponent';
+import {useEffect} from "react";
 
 export default function MainLayout() {
     const auth_token = useAppSelector(state => state.auth.auth_token);
     const user = useAppSelector(state => state.auth.user);
     const dispatch = useAppDispatch();
 
-    const { isLoading, isError } = useMeQuery(undefined, {
+    const { data: userData, isLoading, isError } = useMeQuery(undefined, {
         skip: !auth_token || user !== null,
     });
+
+    useEffect(() => {
+        if (userData) {
+            dispatch(setUser(userData.data.user));
+        }
+    }, [userData, dispatch]);
 
     if (!auth_token) {
         return <Navigate to={PUBLIC_ROUTES.LOGIN} replace />;
