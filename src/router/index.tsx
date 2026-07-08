@@ -19,11 +19,11 @@ import SettingsPage from '../pages/manager/settings/SettingsPage';
 import UserListPage from '../pages/manager/users/UserListPage';
 import UserUpdatePage from '../pages/manager/users/UserUpdatePage';
 import UserCreatePage from '../pages/manager/users/UserCreatePage';
-import OrderStatusesListPage from "../pages/manager/orderStatuses/OrderStatusesListPage.tsx";
-import OrderStatusesCreatePage from "../pages/manager/orderStatuses/OrderStatusesCreatePage.tsx";
-import OrderStatusesUpdatePage from "../pages/manager/orderStatuses/OrderStatusesUpdatePage.tsx";
-import RouterGuard from "../guards/RouterGuard.tsx";
-import RoleGuard from "../guards/RoleGuard.tsx";
+import OrderStatusesListPage from '../pages/manager/orderStatuses/OrderStatusesListPage';
+import OrderStatusesCreatePage from '../pages/manager/orderStatuses/OrderStatusesCreatePage';
+import OrderStatusesUpdatePage from '../pages/manager/orderStatuses/OrderStatusesUpdatePage';
+import RouterGuard from '../guards/RouterGuard.tsx';
+import RoleGuard from '../guards/RoleGuard.tsx';
 
 export const router = createBrowserRouter([
     {
