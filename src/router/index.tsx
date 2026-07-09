@@ -24,6 +24,7 @@ import OrderStatusesCreatePage from '../pages/manager/orderStatuses/OrderStatuse
 import OrderStatusesUpdatePage from '../pages/manager/orderStatuses/OrderStatusesUpdatePage';
 import RouterGuard from '../guards/RouterGuard.tsx';
 import RoleGuard from '../guards/RoleGuard.tsx';
+import OrderUpdatePage from '../pages/manager/orders/OrderUpdatePage';
 
 export const router = createBrowserRouter([
     {
@@ -117,6 +118,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'create',
                         element: <OrderCreatePage />
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: <OrderUpdatePage />
                     }
                 ]
             },

@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import type { InputComponentProps } from '../../../interfaces/ui/ElementsInterface';
+import type { TextareaComponentProps } from '../../../interfaces/ui/ElementsInterface';
 
-export const InputComponent = ({ classNames, isDisabled, ...props }: InputComponentProps) => {
+const TextareaComponent = ({ classNames, isDisabled, ...props }: TextareaComponentProps) => {
     return (
-        <input
+        <textarea
             disabled={isDisabled}
             {...props}
             className={clsx(
@@ -11,8 +11,9 @@ export const InputComponent = ({ classNames, isDisabled, ...props }: InputCompon
                 classNames,
                 isDisabled ? 'text-slate-400' : 'text-white'
             )}
-        />
+        ></textarea>
     );
 };
 
-export default InputComponent;
+export default TextareaComponent;
+

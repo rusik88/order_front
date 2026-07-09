@@ -27,3 +27,8 @@ export interface ISelectOption {
     label: string,
     isDisabled: boolean
 }
+
+export interface TextareaComponentProps extends InputHTMLAttributes<HTMLTextAreaElement> {
+    classNames?: string,
+    isDisabled?: boolean
+}

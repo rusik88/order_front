@@ -11,7 +11,6 @@ export const ordersFormSchema = z.object({
         .min(1, 'Order status is required'),
 
     total: z
-        .coerce
         .number({
             error: 'Total must be a number',
         })

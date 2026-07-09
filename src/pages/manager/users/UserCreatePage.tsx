@@ -13,7 +13,7 @@ import LoaderComponent from '../../../components/common/LoaderComponent.tsx';
 import ButtonComponent from '../../../components/ui/ButtonComponent.tsx';
 import { fullLink } from '../../../functions/helperFunctions.ts';
 import { ENTITY_ROUTES } from '../../../router/routes.ts';
-import { InputComponent } from '../../../components/ui/form/InputComponent.tsx';
+import InputComponent from '../../../components/ui/form/InputComponent.tsx';
 import SelectComponent from '../../../components/ui/form/SelectComponent.tsx';
 import { useCreateUserMutation } from '../../../services/UsersApi';
 import type { ISettingData } from '../../../interfaces/manager/SettingsInterfaces.ts';

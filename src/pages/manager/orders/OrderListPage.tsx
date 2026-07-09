@@ -94,7 +94,7 @@ const OrderStatusesListPage = () => {
 
             <RoleGuard roles={['order_status:create']}>
                 <div className='flex items-center justify-between mb-6'>
-                    <h2 className='text-3xl font-bold'>Order Statuses List</h2>
+                    <h2 className='text-3xl font-bold'>Orders List</h2>
                     <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ORDERS}/create`) }>+ Create Status</ButtonComponent>
                 </div>
             </RoleGuard>
@@ -257,7 +257,7 @@ const OrderStatusesListPage = () => {
 
                                     <td className='p-4 text-right space-x-2'>
                                         <RoleGuard roles={['order_status:update']}>
-                                            <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ORDER_STATUSES}/edit/${item.id}`) }>Edit</ButtonComponent>
+                                            <ButtonComponent type={ 'info' } link={ fullLink(`${ENTITY_ROUTES.ORDERS}/edit/${item.id}`) }>Edit</ButtonComponent>
                                         </RoleGuard>
                                         <RoleGuard roles={['order_status:delete']}>
                                             <ButtonComponent type={ 'error' } onClick={ () => deleteHandle(item.id) }>Delete</ButtonComponent>

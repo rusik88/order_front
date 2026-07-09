@@ -1,4 +1,4 @@
-import { InputComponent } from '../../../components/ui/form/InputComponent';
+import InputComponent from '../../../components/ui/form/InputComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 import { fullLink }  from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';

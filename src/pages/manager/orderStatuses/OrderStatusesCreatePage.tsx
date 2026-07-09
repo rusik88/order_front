@@ -10,7 +10,7 @@ import LoaderComponent from '../../../components/common/LoaderComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 import { fullLink } from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
-import { InputComponent } from '../../../components/ui/form/InputComponent';
+import InputComponent from '../../../components/ui/form/InputComponent';
 
 const OrderStatusesCreatePage = () => {
     const dispatch = useAppDispatch();
@@ -77,7 +77,7 @@ const OrderStatusesCreatePage = () => {
             {(isSubmitting || isLoading) && <LoaderComponent />}
 
             <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold">Create Order</h2>
+                <h2 className="text-3xl font-bold">Create Order Status</h2>
                 <ButtonComponent type={ 'inverse' } link={ fullLink(`${ENTITY_ROUTES.ORDER_STATUSES}`) }>Back to List</ButtonComponent>
             </div>
 

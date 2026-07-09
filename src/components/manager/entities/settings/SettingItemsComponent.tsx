@@ -1,5 +1,5 @@
-import { InputComponent } from '../../../ui/form/InputComponent';
-import type {ISettingItem, SettingsProps} from '../../../../interfaces/manager/SettingsInterfaces';
+import InputComponent from '../../../ui/form/InputComponent';
+import type { ISettingItem, SettingsProps } from '../../../../interfaces/manager/SettingsInterfaces';
 
 const SettingItemComponent = ({ settings }: SettingsProps) => {
     return (

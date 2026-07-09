@@ -25,7 +25,7 @@ export interface IOrderResponseData {
     orders: IOrderItem[]
 }
 
-export interface IOrderStatusData {
-    order_status: IOrderItem
+export interface IOrderData {
+    order: IOrderItem
 }
 

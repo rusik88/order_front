@@ -12,7 +12,7 @@ import LoaderComponent from '../../../components/common/LoaderComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 import { fullLink } from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
-import { InputComponent } from '../../../components/ui/form/InputComponent';
+import InputComponent from '../../../components/ui/form/InputComponent';
 import type { IRoleResponseData } from '../../../interfaces/manager/RolesInterfaces';
 import { useGetRolesQuery } from '../../../services/RolesApi';
 import SelectComponent from '../../../components/ui/form/SelectComponent';

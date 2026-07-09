@@ -11,7 +11,7 @@ import { hideAlert, showAlert } from '../../../store/slices/AlertSlice';
 import type { OrderStatusesFormData } from '../../../schemas/OrderStatusesSchema';
 import { fullLink } from '../../../functions/helperFunctions';
 import { ENTITY_ROUTES } from '../../../router/routes';
-import { InputComponent } from '../../../components/ui/form/InputComponent';
+import InputComponent from '../../../components/ui/form/InputComponent';
 import LoaderComponent from '../../../components/common/LoaderComponent';
 import ButtonComponent from '../../../components/ui/ButtonComponent';
 

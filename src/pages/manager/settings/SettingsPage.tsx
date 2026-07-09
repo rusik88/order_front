@@ -8,7 +8,7 @@ import type {
     settingValueType
 } from '../../../interfaces/manager/SettingsInterfaces.ts';
 import LoaderComponent from '../../../components/common/LoaderComponent';
-import { InputComponent } from '../../../components/ui/form/InputComponent.tsx';
+import InputComponent from '../../../components/ui/form/InputComponent.tsx';
 import SelectComponent from '../../../components/ui/form/SelectComponent.tsx';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useMemo } from 'react';
