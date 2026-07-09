@@ -38,9 +38,6 @@ const OrderUpdatePage = () => {
         formState: { errors, isSubmitting },
     } = useForm<OrdersFormData>({
         resolver: zodResolver(ordersFormSchema),
-        defaultValues: {
-
-        },
     });
 
     const { data: dataOrder, isFetching: isFetchingOrder }: { data: IApiAppResponse<IOrderData>, isFetching: boolean } = useGetOrderQuery(orderId);
@@ -65,7 +62,7 @@ const OrderUpdatePage = () => {
 
             reset({
                 name: order.name,
-                total: order.total,
+                total: order.total.toString(),
                 order_status_id: order.order_status.id,
                 comment: order.comment,
             });
@@ -112,7 +109,6 @@ const OrderUpdatePage = () => {
         }
     };
 
-
     return (
         <>
             {(isSubmitting || isFetchingOrder || isLoadingOrder) && <LoaderComponent />}
@@ -136,9 +132,7 @@ const OrderUpdatePage = () => {
 
                     <div>
                         <label className="block text-slate-300 mb-2">Total($)</label>
-                        <InputComponent type="number" placeholder="250.50" {...register('total', {
-                            valueAsNumber: true,
-                        })} />
+                        <InputComponent type="text" placeholder="250.50" {...register('total')} />
                         {errors.total && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.total.message}

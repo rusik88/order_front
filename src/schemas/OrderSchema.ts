@@ -11,10 +11,10 @@ export const ordersFormSchema = z.object({
         .min(1, 'Order status is required'),
 
     total: z
-        .number({
-            error: 'Total must be a number',
-        })
-        .min(0, 'Total is required'),
+        .string()
+        .trim()
+        .min(1, 'Total is required')
+        .regex(/^\d+(\.\d{1,2})?$/, 'Total must be a valid amount'),
 
     comment: z
         .string()

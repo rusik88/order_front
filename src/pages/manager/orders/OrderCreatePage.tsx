@@ -111,7 +111,7 @@ const OrderCreatePage = () => {
 
                     <div>
                         <label className="block text-slate-300 mb-2">Total($)</label>
-                        <InputComponent type="number" placeholder="250.50" {...register('total')} />
+                        <InputComponent type="text" placeholder="250.50" {...register('total')} />
                         {errors.total && (
                             <p className="mt-2 text-sm text-red-400">
                                 {errors.total.message}

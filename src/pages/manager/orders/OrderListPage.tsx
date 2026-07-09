@@ -25,7 +25,7 @@ const OrderStatusesListPage = () => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
     const [sortField, setSortField] = useState<'name' | 'total' | 'order_status_id' |  'id' | 'created_at'>('id');
-    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
     const { data, isFetching }: { data: IApiAppResponse<IOrderResponseData>, isFetching: boolean } = useGetOrdersQuery(
         { page, per_page: perPage, name: nameFilter, sort_field: sortField, sort_direction: sortDirection }
